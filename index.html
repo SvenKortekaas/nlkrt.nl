@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NL-UTG-KRT-REP01 · MeshCore Solar Repeater</title>
+  <meta name="description" content="MeshCore solar-powered repeater · SenseCAP Solar Node P1-Pro · 868 MHz · Nederland" />
+  <meta name="theme-color" content="#0d1117" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       DESIGN TOKENS · MESHCORE.IO INSPIRED DARK THEME
+       deep navy + vivid mesh green + clean sans-serif
+       ========================================================= */
+    :root {
+      /* base — dark navy / charcoal */
+      --bg-0: #0d1117;
+      --bg-1: #161b22;
+      --bg-2: #1c232c;
+      --surface: #1a2027;
+      --surface-hi: #232b35;
+      --border: #2d3540;
+      --border-hi: #3d4654;
+
+      /* ink — clean whites with subtle warmth */
+      --ink: #e6edf3;
+      --ink-dim: #b1bac4;
+      --ink-mute: #7d8590;
+      --ink-faint: #4a5260;
+
+      /* accents — MeshCore vivid green */
+      --amber: #22c55e;
+      --amber-hi: #4ade80;
+      --amber-glow: rgba(34, 197, 94, 0.15);
+
+      /* signal — slightly different green for layered hierarchy */
+      --signal: #22c55e;
+      --signal-hi: #4ade80;
+      --signal-glow: rgba(34, 197, 94, 0.18);
+
+      /* warn — modern red */
+      --warn: #ef4444;
+      --warn-glow: rgba(239, 68, 68, 0.15);
+
+      /* device tones for hardware illustrations */
+      --device: #1c232c;
+      --device-hi: #2d3540;
+      --device-deep: #0d1117;
+
+      --grid: rgba(34, 197, 94, 0.04);
+
+      /* type — Inter for sans, JetBrains Mono for code, no serif */
+      --serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+      --rad: 4px;
+      --rad-lg: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-0);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.6;
+      font-size: 16px;
+      letter-spacing: 0;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(34, 197, 94, 0.05), transparent 50%),
+        radial-gradient(ellipse at 80% 90%, rgba(34, 197, 94, 0.03), transparent 50%);
+    }
+
+    /* faint paper-grid texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 80px 80px;
+      opacity: 0.5;
+      z-index: 0;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    }
+
+    /* very subtle film grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 13% 27%, rgba(255,255,255,0.015) 1px, transparent 2px),
+        radial-gradient(circle at 67% 71%, rgba(255,255,255,0.015) 1px, transparent 2px),
+        radial-gradient(circle at 41% 89%, rgba(255,255,255,0.015) 1px, transparent 2px);
+      background-size: 7px 7px, 11px 11px, 13px 13px;
+      z-index: 1;
+    }
+
+    main, header, footer { position: relative; z-index: 2; }
+
+    /* TYPOGRAPHY */
+    h1, h2, h3, h4 {
+      font-family: var(--sans);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+    }
+    h1 { font-size: clamp(2.5rem, 7vw, 4.5rem); font-weight: 800; }
+    h2 { font-size: clamp(1.875rem, 4vw, 2.75rem); }
+    h3 { font-size: clamp(1.125rem, 1.8vw, 1.5rem); font-weight: 600; }
+    h4 { font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em; }
+
+    .display-italic { color: var(--amber); font-weight: 700; font-style: normal; }
+    .mono { font-family: var(--mono); }
+    .upper { text-transform: uppercase; letter-spacing: 0.18em; }
+    .micro { font-size: 0.6875rem; font-family: var(--mono); letter-spacing: 0.16em; text-transform: uppercase; }
+
+    /* LAYOUT */
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
+    section { padding: clamp(3rem, 8vw, 6rem) 0; border-top: 1px solid var(--border); position: relative; }
+    section:first-of-type { border-top: none; }
+
+    .section-head {
+      display: flex; align-items: baseline; gap: 1.25rem;
+      margin-bottom: 2.5rem; flex-wrap: wrap;
+    }
+    .section-num {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--amber);
+      letter-spacing: 0.2em;
+    }
+    .section-head h2 { flex: 0 1 auto; }
+    .section-head .lede {
+      flex: 1 1 320px;
+      color: var(--ink-dim);
+      max-width: 42ch;
+      font-size: 0.9375rem;
+      margin-left: auto;
+      padding-left: 1rem;
+      border-left: 1px solid var(--border);
+    }
+
+    /* TOPBAR */
+    header.topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner {
+      display: flex; align-items: center; gap: 2rem;
+      padding: 0.875rem clamp(1.25rem, 4vw, 2.5rem);
+      max-width: 1280px; margin: 0 auto;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 0.625rem;
+      font-family: var(--mono); font-size: 0.8125rem;
+      letter-spacing: 0.12em; color: var(--ink);
+    }
+    .brand-mark {
+      width: 14px; height: 14px;
+      border: 1.5px solid var(--amber);
+      transform: rotate(45deg);
+      position: relative;
+    }
+    .brand-mark::after {
+      content: ''; position: absolute; inset: 2px;
+      background: var(--amber); opacity: 0.5;
+    }
+    nav.top-nav {
+      display: flex; gap: 1.5rem;
+      margin-left: auto; font-size: 0.8125rem;
+    }
+    nav.top-nav a {
+      color: var(--ink-dim); text-decoration: none;
+      font-family: var(--mono); letter-spacing: 0.06em;
+      transition: color 0.2s; position: relative;
+    }
+    nav.top-nav a:hover { color: var(--amber); }
+
+    .top-status {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--mono); font-size: 0.75rem;
+      letter-spacing: 0.12em; color: var(--signal);
+      text-decoration: none; transition: opacity 0.2s;
+    }
+    .top-status:hover { opacity: 0.75; }
+    .top-status::before {
+      content: ''; width: 7px; height: 7px;
+      background: currentColor; border-radius: 50%;
+      box-shadow: 0 0 8px currentColor;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+
+    @media (max-width: 980px) { nav.top-nav { display: none; } }
+
+    /* HERO */
+    .hero { padding: clamp(4rem, 10vw, 7rem) 0 clamp(3rem, 6vw, 5rem); border-top: none; }
+    .hero-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 3rem; align-items: end; }
+    @media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 2rem; } }
+
+    .hero-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+
+    .pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.375rem 0.75rem;
+      border: 1px solid var(--border-hi);
+      border-radius: 999px;
+      font-family: var(--mono); font-size: 0.6875rem;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-dim);
+      background: rgba(26, 32, 39, 0.7);
+    }
+    .pill.live {
+      border-color: var(--signal); color: var(--signal);
+      background: rgba(21, 128, 61, 0.08);
+    }
+    .pill.live::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--signal);
+      animation: pulse-dot 1.4s ease-in-out infinite;
+    }
+    .pill.stale { border-color: var(--amber); color: var(--amber); background: var(--amber-glow); }
+    .pill.stale::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--amber);
+    }
+    .pill.offline { border-color: var(--warn); color: var(--warn); background: var(--warn-glow); }
+    .pill.amber { border-color: var(--amber); color: var(--amber); background: var(--amber-glow); }
+
+    .hero h1 { margin-bottom: 1.5rem; }
+    .hero h1 .l1 { display: block; color: var(--ink); }
+    .hero h1 .l2 {
+      display: block; color: var(--amber);
+      font-weight: 600; font-size: 0.5em;
+      margin-top: 0.5em; letter-spacing: -0.005em;
+    }
+    .hero p.lede { font-size: 1.125rem; color: var(--ink-dim); max-width: 56ch; margin-bottom: 2rem; }
+
+    .hero-coords {
+      font-family: var(--mono); font-size: 0.8125rem;
+      color: var(--ink-mute); display: grid; gap: 0.375rem;
+    }
+    .hero-coords span { display: block; }
+    .hero-coords .k { color: var(--amber); }
+
+    /* HERO CTAs */
+    .hero-cta-row {
+      display: flex; gap: 0.75rem; margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .cta {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      font-family: var(--mono); font-size: 0.8125rem;
+      letter-spacing: 0.06em; text-decoration: none;
+      border-radius: var(--rad);
+      transition: all 0.15s;
+    }
+    .cta.primary {
+      background: var(--amber);
+      color: var(--bg-0);
+      font-weight: 600;
+    }
+    .cta.primary:hover {
+      background: var(--amber-hi);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(34, 197, 94, 0.25);
+    }
+    .cta.secondary {
+      border: 1px solid var(--border-hi);
+      color: var(--ink);
+    }
+    .cta.secondary:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+    .cta .arrow { font-size: 1em; }
+
+    /* SWITCH BANNER (in hero) */
+    .switch-banner {
+      margin-top: 3rem;
+      background: linear-gradient(135deg, var(--surface), var(--bg-1));
+      border: 1px solid var(--border-hi);
+      border-radius: var(--rad-lg);
+      padding: 1.75rem 2rem;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 2rem; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .switch-banner::before {
+      content: ''; position: absolute;
+      left: 0; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(180deg, var(--amber), transparent);
+    }
+    @media (max-width: 880px) {
+      .switch-banner { grid-template-columns: 1fr; }
+    }
+    .switch-banner-title {
+      font-size: 1.5rem; margin-top: 0.5rem; font-weight: 700;
+      letter-spacing: -0.02em; color: var(--ink);
+    }
+    .switch-banner p {
+      font-size: 0.9375rem; line-height: 1.6;
+      color: var(--ink-dim); margin-top: 0.625rem;
+      max-width: 56ch;
+    }
+    .switch-banner-counters {
+      display: flex; align-items: center; gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .counter {
+      text-align: center;
+    }
+    .counter-num {
+      font-family: var(--sans); font-size: 2.5rem;
+      font-weight: 800; line-height: 1;
+      color: var(--amber); letter-spacing: -0.03em;
+    }
+    .counter-lbl {
+      font-family: var(--mono); font-size: 0.625rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-mute); margin-top: 0.25rem;
+      max-width: 8rem;
+    }
+    .counter-cta {
+      font-family: var(--mono); font-size: 0.75rem;
+      color: var(--amber); text-decoration: none;
+      border-bottom: 1px dashed var(--amber);
+      letter-spacing: 0.08em; padding-bottom: 2px;
+    }
+    .counter-cta:hover { opacity: 0.8; }
+
+    /* LIVE / Cornmeister cards */
+    .live-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 880px) { .live-grid { grid-template-columns: 1fr; } }
+
+    .live-card {
+      padding: 2rem;
+      display: flex; flex-direction: column;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .live-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(34, 197, 94, 0.12);
+      border-color: var(--amber);
+    }
+    .live-card-meta {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .role-badge {
+      font-family: var(--mono); font-size: 0.6875rem;
+      letter-spacing: 0.16em; padding: 0.3rem 0.625rem;
+      background: var(--amber-glow); color: var(--amber);
+      border: 1px solid var(--amber); border-radius: 3px;
+    }
+    .role-badge--observer {
+      background: rgba(167, 139, 250, 0.12);
+      color: #a78bfa;
+      border-color: #a78bfa;
+    }
+    .live-card-arrow {
+      font-size: 1.25rem; color: var(--ink-mute);
+      transition: transform 0.2s;
+    }
+    .live-card:hover .live-card-arrow {
+      color: var(--amber);
+      transform: translate(2px, -2px);
+    }
+    .live-card-name {
+      font-family: var(--sans); font-size: 1.5rem;
+      font-weight: 700; color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .live-card-desc {
+      font-size: 0.9375rem; color: var(--ink-dim);
+      line-height: 1.6;
+    }
+    .live-card-pubkey {
+      font-family: var(--mono); font-size: 0.75rem;
+      padding: 0.625rem 0.875rem;
+      background: var(--bg-1); border: 1px solid var(--border);
+      border-radius: var(--rad);
+      display: flex; align-items: baseline; gap: 0.625rem;
+      user-select: text;
+    }
+    .live-card-pubkey code {
+      color: var(--ink); letter-spacing: 0.02em;
+      font-family: var(--mono);
+    }
+    .live-card-cta {
+      font-family: var(--mono); font-size: 0.8125rem;
+      color: var(--amber); margin-top: auto;
+      letter-spacing: 0.06em;
+    }
+
+    /* Architecture row */
+    .live-arch {
+      margin-top: 2rem;
+      padding: 1.5rem 2rem;
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--rad-lg);
+    }
+    .live-arch-title {
+      color: var(--ink-mute);
+      margin-bottom: 1.25rem;
+    }
+    .live-arch-row {
+      display: flex; align-items: center;
+      gap: 1.25rem; flex-wrap: wrap;
+    }
+    .live-arch-step {
+      display: flex; align-items: center; gap: 0.875rem;
+      flex: 1; min-width: 200px;
+    }
+    .live-arch-step .step-icon {
+      font-size: 1.5rem; flex-shrink: 0;
+    }
+    .live-arch-step .step-text {
+      display: flex; flex-direction: column;
+    }
+    .live-arch-step .step-text strong {
+      font-family: var(--sans); font-size: 0.9375rem;
+      font-weight: 600; color: var(--ink);
+    }
+    .live-arch-step .step-text span {
+      font-size: 0.8125rem; color: var(--ink-mute);
+      line-height: 1.4;
+    }
+    .arrow-step {
+      color: var(--amber); font-size: 1.25rem;
+      font-family: var(--mono);
+    }
+    @media (max-width: 720px) {
+      .live-arch-row { flex-direction: column; align-items: stretch; }
+      .arrow-step { transform: rotate(90deg); }
+    }
+
+    /* SWITCH section */
+    .switch-phases {
+      display: grid; grid-template-columns: 1.4fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 880px) { .switch-phases { grid-template-columns: 1fr; } }
+
+    .phase-card {
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--rad-lg);
+      position: relative;
+      display: flex; flex-direction: column;
+      gap: 1rem;
+    }
+    .phase-card--main {
+      border-color: var(--amber);
+      background: linear-gradient(180deg, var(--amber-glow), var(--surface) 35%);
+    }
+
+    .phase-card-meta {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 1rem;
+    }
+    .phase-tag {
+      font-family: var(--mono); font-size: 0.6875rem;
+      letter-spacing: 0.16em; padding: 0.3rem 0.625rem;
+      background: var(--amber); color: var(--bg-0);
+      border-radius: 3px; font-weight: 600;
+    }
+    .phase-tag--sub {
+      background: rgba(167, 139, 250, 0.15);
+      color: #a78bfa;
+      border: 1px solid #a78bfa;
+    }
+    .phase-countdown {
+      text-align: right;
+    }
+    .phase-countdown .counter-num { font-size: 2rem; }
+
+    .phase-card-title {
+      font-family: var(--sans); font-size: 1.375rem;
+      font-weight: 700; color: var(--ink);
+      letter-spacing: -0.02em; margin: 0;
+    }
+    .phase-card p {
+      font-size: 0.9375rem; line-height: 1.6;
+      color: var(--ink-dim); margin: 0;
+    }
+    .phase-foot {
+      font-size: 0.8125rem !important;
+      color: var(--ink-mute) !important;
+      padding-top: 0.625rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .phase-spec {
+      font-family: var(--mono); font-size: 0.8125rem;
+      width: 100%; border-collapse: collapse;
+      margin: 0.5rem 0;
+    }
+    .phase-spec td {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .phase-spec td:first-child { color: var(--ink-mute); width: 40%; }
+    .phase-spec td:last-child { color: var(--ink); }
+    .phase-spec strong { color: var(--amber); font-weight: 600; }
+    .phase-spec tr:last-child td { border-bottom: none; }
+
+    .phase-cli {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--rad);
+      padding: 1rem;
+    }
+    .phase-cli-label {
+      font-family: var(--mono); font-size: 0.6875rem;
+      letter-spacing: 0.14em; color: var(--ink-mute);
+      text-transform: uppercase; display: block;
+      margin-bottom: 0.5rem;
+    }
+    .phase-cli code {
+      font-family: var(--mono); font-size: 0.8125rem;
+      color: var(--amber); line-height: 1.7;
+      display: block;
+    }
+
+    .switch-steps {
+      margin-top: 2rem;
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--rad-lg);
+      padding: 1.75rem;
+    }
+    .switch-steps-title {
+      font-family: var(--sans); font-size: 1rem;
+      font-weight: 600; color: var(--ink);
+      margin-bottom: 1.25rem; letter-spacing: -0.01em;
+    }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 880px) { .steps-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .steps-grid { grid-template-columns: 1fr; } }
+
+    .step-mini {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 0.875rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--rad);
+    }
+    .step-mini-num {
+      font-family: var(--sans); font-size: 1.125rem;
+      font-weight: 800; color: var(--amber);
+      width: 2rem; height: 2rem; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--amber-glow);
+      border-radius: 4px; line-height: 1;
+    }
+    .step-mini > div {
+      display: flex; flex-direction: column; gap: 0.25rem;
+    }
+    .step-mini strong {
+      font-family: var(--sans); font-size: 0.875rem;
+      font-weight: 600; color: var(--ink);
+    }
+    .step-mini span {
+      font-size: 0.75rem; color: var(--ink-mute);
+      line-height: 1.5;
+    }
+    .step-mini code {
+      font-family: var(--mono); font-size: 0.6875rem;
+      color: var(--amber); padding: 0;
+      background: transparent;
+    }
+
+    /* PANELS */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--rad-lg);
+      padding: clamp(1.5rem, 3vw, 2.25rem);
+      position: relative;
+    }
+    .panel-corner {
+      position: absolute; width: 14px; height: 14px;
+      border: 1px solid var(--amber); opacity: 0.6;
+    }
+    .panel-corner.tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+    .panel-corner.tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+    .panel-corner.bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+    .panel-corner.br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+    /* IDENTITY */
+    .id-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem; }
+    @media (max-width: 880px) { .id-grid { grid-template-columns: 1fr; } }
+
+    .id-table { display: grid; gap: 0.5rem; margin-top: 1.25rem; font-family: var(--mono); font-size: 0.875rem; }
+    .id-row {
+      display: grid; grid-template-columns: 11rem 1fr;
+      gap: 1rem; padding: 0.5rem 0;
+      border-bottom: 1px dashed var(--border);
+      align-items: baseline;
+    }
+    .id-row:last-child { border-bottom: none; }
+    .id-row dt {
+      color: var(--ink-mute); font-size: 0.6875rem;
+      letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    .id-row dd { color: var(--ink); }
+    .id-row dd .accent { color: var(--amber); }
+    .id-row dd .signal { color: var(--signal); }
+
+    .keycard h4 { margin-bottom: 0.75rem; }
+    .pubkey-block { margin-bottom: 0.5rem; }
+    .pubkey-head {
+      display: flex; justify-content: space-between;
+      align-items: baseline; gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .pubkey-head h4 { margin-bottom: 0 !important; }
+    .pubkey-link {
+      font-family: var(--mono); font-size: 0.625rem;
+      letter-spacing: 0.1em; color: var(--ink-mute);
+      text-decoration: none; flex-shrink: 0;
+      transition: color 0.15s;
+    }
+    .pubkey-link:hover { color: var(--amber); }
+    .pubkey {
+      font-family: var(--mono); font-size: 0.6875rem;
+      color: var(--ink); word-break: break-all;
+      background: var(--bg-1); padding: 0.875rem;
+      border-radius: var(--rad);
+      border: 1px solid var(--border); line-height: 1.7;
+      margin-bottom: 0;
+      user-select: text;
+    }
+    .keycard .scope-list { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .scope-tag {
+      font-family: var(--mono); font-size: 0.6875rem;
+      padding: 0.3rem 0.6rem;
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      border-radius: 3px; letter-spacing: 0.08em;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: default;
+    }
+
+    /* HARDWARE */
+    .hw-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 2rem; }
+    .hw-grid--observer { grid-template-columns: 1fr 1.3fr; }
+    @media (max-width: 880px) {
+      .hw-grid, .hw-grid--observer { grid-template-columns: 1fr; }
+      .hw-grid--observer .hw-illu { order: -1; }
+    }
+
+    .hw-divider {
+      margin: 3rem 0 2.5rem;
+      border-top: 1px dashed var(--border);
+      position: relative; height: 0;
+    }
+    .hw-divider::before {
+      content: '◇';
+      position: absolute; top: -0.625rem;
+      left: 50%; transform: translateX(-50%);
+      background: var(--bg-0); padding: 0 0.875rem;
+      color: var(--amber); font-size: 0.875rem;
+    }
+
+    .hw-role-label {
+      display: flex; align-items: center; gap: 0.875rem;
+      margin-bottom: 1rem; flex-wrap: wrap;
+    }
+    .hw-role-name {
+      font-family: var(--mono); font-size: 0.8125rem;
+      color: var(--ink-mute); letter-spacing: 0.04em;
+    }
+
+    .hw-illu {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--rad-lg);
+      padding: 2rem;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 360px; position: relative; overflow: hidden;
+    }
+    .hw-illu::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 30% 30%, var(--amber-glow), transparent 50%),
+        radial-gradient(circle at 70% 70%, var(--signal-glow), transparent 50%);
+    }
+
+    .hw-specs h3 { margin-bottom: 1.25rem; }
+    .spec-list { list-style: none; }
+    .spec-list li {
+      display: grid; grid-template-columns: 9rem 1fr;
+      gap: 1rem; padding: 0.625rem 0;
+      border-bottom: 1px dashed var(--border);
+      font-family: var(--mono); font-size: 0.8125rem;
+      align-items: baseline;
+    }
+    .spec-list li .k {
+      color: var(--ink-mute); font-size: 0.6875rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .spec-list li .v { color: var(--ink); }
+    .spec-list li .v em { color: var(--amber); font-style: normal; }
+
+    /* COVERAGE */
+    .coverage-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem; align-items: stretch;
+    }
+    @media (max-width: 880px) { .coverage-grid { grid-template-columns: 1fr; } }
+    .coverage-panel { padding: 2rem; }
+    .coverage-panel h3 { margin-bottom: 0.5rem; }
+    .coverage-list {
+      list-style: none; margin-top: 1.25rem;
+    }
+    .coverage-list li {
+      padding: 0.625rem 0 0.625rem 1.5rem;
+      position: relative;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.9375rem;
+      color: var(--ink-dim);
+      line-height: 1.6;
+    }
+    .coverage-list li:last-child { border-bottom: none; }
+    .coverage-list li::before {
+      content: '→'; position: absolute; left: 0; top: 0.625rem;
+      color: var(--amber); font-family: var(--mono);
+    }
+    .coverage-list li strong { color: var(--ink); font-weight: 600; }
+
+    /* REGION CARDS */
+    .region-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    @media (max-width: 880px) { .region-grid { grid-template-columns: 1fr; } }
+    .region-card { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; position: relative; }
+    .region-card.home {
+      background: linear-gradient(135deg, var(--surface-hi), var(--surface));
+      border-color: var(--amber);
+    }
+    .region-card.home::before {
+      content: 'HOME';
+      position: absolute; top: 0.625rem; right: 0.875rem;
+      font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.16em;
+      color: var(--amber);
+    }
+    .region-card .rk {
+      font-family: var(--mono); font-size: 0.6875rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-mute);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .region-card .rk .depth { display: inline-flex; gap: 2px; }
+    .region-card .rk .depth span {
+      width: 6px; height: 8px;
+      background: var(--border-hi);
+      border-radius: 1px;
+    }
+    .region-card .rk .depth span.on { background: var(--amber); }
+    .region-card .rv {
+      font-family: var(--mono); font-size: 1.625rem;
+      line-height: 1; color: var(--amber);
+      font-weight: 600; letter-spacing: -0.01em;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .region-card.home .rv { font-size: 2.25rem; }
+    .region-card .rd { font-size: 0.875rem; color: var(--ink-dim); margin-top: 0.5rem; }
+
+    /* parent chain breadcrumb */
+    .scope-chain {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--mono); font-size: 0.8125rem;
+      color: var(--ink-dim); flex-wrap: wrap;
+      margin-top: 0.625rem;
+    }
+    .scope-chain .crumb {
+      padding: 0.25rem 0.625rem;
+      border: 1px solid var(--border-hi);
+      border-radius: 3px;
+      color: var(--ink);
+      background: var(--bg-1);
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: default;
+    }
+    .scope-chain .crumb.active {
+      border-color: var(--amber);
+      color: var(--amber);
+      background: var(--amber-glow);
+    }
+    .scope-chain .crumb.crumb-implicit {
+      border-style: dashed;
+      color: var(--ink-mute);
+      opacity: 0.7;
+    }
+    .scope-chain .arrow { color: var(--ink-mute); }
+
+    /* configurator embed */
+    .config-frame {
+      margin-top: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--rad-lg);
+      overflow: hidden;
+      background: var(--surface);
+      position: relative;
+    }
+    .config-frame iframe {
+      width: 100%;
+      height: 720px;
+      border: 0;
+      display: block;
+      background: white;
+    }
+    @media (max-width: 720px) {
+      .config-frame iframe { height: 560px; }
+    }
+    .config-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.625rem 1rem;
+      background: var(--bg-1);
+      border-top: 1px solid var(--border);
+      font-family: var(--mono); font-size: 0.6875rem;
+      color: var(--ink-mute); letter-spacing: 0.08em;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+    .config-meta a {
+      color: var(--amber); text-decoration: none;
+      border-bottom: 1px dashed var(--amber);
+    }
+
+
+    /* EDU */
+    .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    @media (max-width: 880px) { .edu-grid { grid-template-columns: 1fr; } }
+    .edu-card { padding: 2rem 1.75rem; }
+    .edu-card .num {
+      font-family: var(--mono); font-size: 2rem; line-height: 1;
+      color: var(--amber); font-weight: 700;
+      margin-bottom: 1rem; display: block;
+      letter-spacing: 0.05em;
+    }
+    .edu-card h4 { margin-bottom: 0.75rem; font-size: 1.125rem; }
+    .edu-card p { color: var(--ink-dim); font-size: 0.9375rem; }
+
+    /* STEPS */
+    .steps { display: grid; gap: 0; counter-reset: step; }
+    .step {
+      display: grid; grid-template-columns: 6rem 1fr; gap: 2rem;
+      padding: 2rem 0; border-bottom: 1px solid var(--border);
+      counter-increment: step;
+    }
+    .step:last-child { border-bottom: none; }
+    @media (max-width: 720px) { .step { grid-template-columns: 1fr; gap: 0.5rem; } }
+
+    .step-num {
+      font-family: var(--sans); font-size: 3rem; line-height: 1;
+      font-weight: 800;
+      color: var(--amber);
+    }
+    .step-num::before { content: counter(step, decimal-leading-zero); }
+    .step-body h4 { margin-bottom: 0.625rem; font-size: 1.125rem; font-family: var(--sans); font-weight: 600; }
+    .step-body p { color: var(--ink-dim); margin-bottom: 0.75rem; }
+    .step-body code {
+      font-family: var(--mono); font-size: 0.8125rem;
+      background: var(--bg-1); padding: 0.125rem 0.375rem;
+      border-radius: 3px; color: var(--amber);
+      border: 1px solid var(--border);
+    }
+
+    /* FAQ */
+    .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem 2rem; }
+    @media (max-width: 720px) { .faq-grid { grid-template-columns: 1fr; } }
+    .faq-col-title {
+      padding: 0 0 0.875rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.16em !important;
+    }
+
+    details.faq { border-bottom: 1px solid var(--border); padding: 1.25rem 0; }
+    details.faq summary {
+      cursor: pointer; list-style: none;
+      display: flex; justify-content: space-between;
+      align-items: center; gap: 1rem;
+      font-family: var(--sans); font-size: 1rem;
+      font-weight: 500; color: var(--ink);
+      transition: color 0.2s;
+    }
+    details.faq summary::-webkit-details-marker { display: none; }
+    details.faq summary::after {
+      content: '+'; font-family: var(--mono); color: var(--amber);
+      font-size: 1.25rem; transition: transform 0.3s;
+    }
+    details.faq[open] summary::after { transform: rotate(45deg); }
+    details.faq[open] summary { color: var(--amber); }
+    details.faq p { margin-top: 0.875rem; color: var(--ink-dim); font-size: 0.9375rem; line-height: 1.7; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 4rem 0 2rem;
+      margin-top: 4rem;
+      background: var(--bg-1);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
+      gap: 2rem; margin-bottom: 3rem;
+    }
+    @media (max-width: 1100px) {
+      .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; }
+    }
+    @media (max-width: 700px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    }
+    .footer-col h5 {
+      font-family: var(--mono); font-size: 0.6875rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 1rem;
+    }
+    .footer-col a {
+      display: block; color: var(--ink-dim);
+      text-decoration: none; padding: 0.25rem 0;
+      font-size: 0.875rem; transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--ink); }
+    .footer-col p { color: var(--ink-mute); font-size: 0.875rem; }
+    .footer-mark h4 {
+      font-family: var(--sans); font-size: 1.375rem;
+      font-weight: 700; color: var(--ink);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      display: flex; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      font-family: var(--mono); font-size: 0.6875rem;
+      color: var(--ink-mute); letter-spacing: 0.1em;
+    }
+
+    ::selection { background: var(--amber); color: var(--bg-0); }
+  </style>
+</head>
+
+<body>
+
+  <!-- =================================================
+       TOP BAR
+       ================================================= -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span id="brand-name">NL-UTG-KRT-REP01</span>
+      </div>
+      <nav class="top-nav">
+        <a href="#identity">Status</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#live">Live</a>
+        <a href="#switch">The Switch</a>
+        <a href="#region">Regio</a>
+        <a href="#configurator">Configurator</a>
+        <a href="#aansluiten">Aansluiten</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a href="https://cornmeister.nl/#/nodes/89115054326394fc1a0bb981b96688c5411ae9e30885de5424536828a7e3632c" target="_blank" rel="noopener" class="top-status live-link">
+        <span id="top-status-text">LIVE OP CORNMEISTER ↗</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- =================================================
+         HERO
+         ================================================= -->
+    <section class="hero" id="status">
+      <div class="wrap">
+
+        <div class="hero-meta">
+          <span class="pill amber">SenseCAP Solar P1-Pro</span>
+          <span class="pill" id="pill-radio">Radio · 869.618 MHz · SF7/CR5 vanaf 9 mei</span>
+          <span class="pill">Firmware v1.15</span>
+        </div>
+
+        <div class="hero-grid">
+          <div>
+            <h1>
+              <span class="l1" id="hero-name">NL-UTG-KRT-REP01</span>
+              <span class="l2">een solar MeshCore-repeater op een dak in Uitgeest</span>
+            </h1>
+            <p class="lede">
+              Off-grid LoRa-relay op zonne-energie. Geen abonnement, geen cloud, geen single point of failure —
+              alleen een paar honderd milliwatt en een dakzicht op Noord-Holland. Doet stilletjes z'n werk
+              voor elk MeshCore-pakket dat hier voorbijkomt.
+            </p>
+            <div class="hero-coords">
+              <span><span class="k">LOC </span> <span id="hero-loc">Noord-Holland · NL</span></span>
+              <span><span class="k">GEO </span> <span id="hero-geo">52.51°N, 4.71°E · ±2 km</span></span>
+              <span><span class="k">ALT </span> <span id="hero-alt">5 m · dakmontage</span></span>
+              <span><span class="k">SINCE</span> <span id="hero-since">2026-04-14</span></span>
+            </div>
+
+            <!-- Cornmeister CTA inline in hero -->
+            <div class="hero-cta-row">
+              <a href="https://cornmeister.nl/#/nodes/89115054326394fc1a0bb981b96688c5411ae9e30885de5424536828a7e3632c" target="_blank" rel="noopener" class="cta primary">
+                Live data op Cornmeister <span class="arrow">↗</span>
+              </a>
+              <a href="#switch" class="cta secondary">
+                Doet mee met The Switch
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <!-- Two-node illustration: repeater (P1-Pro) + observer (Heltec V4.3) -->
+            <svg viewBox="0 0 360 320" style="width:100%;max-width:360px;margin-left:auto;display:block;">
+              <defs>
+                <radialGradient id="sun-grad" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#4ade80" stop-opacity="0.9"/>
+                  <stop offset="40%" stop-color="#22c55e" stop-opacity="0.4"/>
+                  <stop offset="100%" stop-color="#22c55e" stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="panel-grad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#1e3a5f"/>
+                  <stop offset="100%" stop-color="#0d1117"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Sun glow behind repeater -->
+              <circle cx="100" cy="60" r="100" fill="url(#sun-grad)"/>
+
+              <!-- Range rings -->
+              <circle cx="180" cy="170" r="135" fill="none" stroke="#3d4654" stroke-dasharray="2 6" opacity="0.5"/>
+              <circle cx="180" cy="170" r="90" fill="none" stroke="#3d4654" stroke-dasharray="2 6" opacity="0.4"/>
+
+              <!-- LEFT: P1-Pro repeater on a roof -->
+              <g transform="translate(40 80)">
+                <!-- solar panel -->
+                <rect x="0" y="0" width="80" height="50" fill="url(#panel-grad)" stroke="#3d4654"/>
+                <line x1="20" y1="0" x2="20" y2="50" stroke="#2d3540"/>
+                <line x1="40" y1="0" x2="40" y2="50" stroke="#2d3540"/>
+                <line x1="60" y1="0" x2="60" y2="50" stroke="#2d3540"/>
+                <line x1="0" y1="17" x2="80" y2="17" stroke="#2d3540"/>
+                <line x1="0" y1="34" x2="80" y2="34" stroke="#2d3540"/>
+                <!-- enclosure under panel -->
+                <rect x="20" y="55" width="40" height="48" fill="#1c232c" stroke="#3d4654" rx="2"/>
+                <circle cx="40" cy="68" r="2.5" fill="#22c55e">
+                  <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/>
+                </circle>
+                <text x="40" y="86" text-anchor="middle" fill="#22c55e" font-family="JetBrains Mono" font-size="6" letter-spacing="1">REPEATER</text>
+                <text x="40" y="96" text-anchor="middle" fill="#7d8590" font-family="JetBrains Mono" font-size="4.5">P1-PRO</text>
+                <!-- antenna -->
+                <line x1="40" y1="-22" x2="40" y2="0" stroke="#22c55e" stroke-width="1.5"/>
+                <circle cx="40" cy="-22" r="2.5" fill="#22c55e"/>
+                <!-- roofline below -->
+                <line x1="-5" y1="110" x2="85" y2="110" stroke="#3d4654"/>
+                <line x1="-10" y1="115" x2="-15" y2="120" stroke="#3d4654"/>
+                <line x1="5"  y1="115" x2="0"   y2="120" stroke="#3d4654"/>
+                <line x1="20" y1="115" x2="15"  y2="120" stroke="#3d4654"/>
+                <line x1="35" y1="115" x2="30"  y2="120" stroke="#3d4654"/>
+                <line x1="50" y1="115" x2="45"  y2="120" stroke="#3d4654"/>
+                <line x1="65" y1="115" x2="60"  y2="120" stroke="#3d4654"/>
+                <line x1="80" y1="115" x2="75"  y2="120" stroke="#3d4654"/>
+                <text x="40" y="138" text-anchor="middle" fill="#22c55e" font-family="JetBrains Mono" font-size="6" letter-spacing="1">NL-UTG-KRT-REP01</text>
+              </g>
+
+              <!-- RIGHT: Heltec V4.3 observer (indoor, on a desk) -->
+              <g transform="translate(220 110)">
+                <!-- desk surface -->
+                <line x1="-10" y1="80" x2="100" y2="80" stroke="#3d4654" opacity="0.6"/>
+                <!-- Heltec board with OLED -->
+                <rect x="10" y="20" width="60" height="60" fill="#1c232c" stroke="#3d4654" rx="2"/>
+                <!-- OLED screen (display showing waveform) -->
+                <rect x="18" y="28" width="44" height="20" fill="#0d1117" stroke="#22c55e" stroke-width="0.6"/>
+                <polyline points="20,40 24,36 28,42 32,34 36,40 40,38 44,42 48,34 52,40 56,38 60,42"
+                          fill="none" stroke="#22c55e" stroke-width="0.7" opacity="0.85">
+                  <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+                </polyline>
+                <!-- status LEDs -->
+                <circle cx="22" cy="56" r="1.6" fill="#4ade80"/>
+                <circle cx="28" cy="56" r="1.6" fill="#facc15"/>
+                <text x="40" y="68" text-anchor="middle" fill="#22c55e" font-family="JetBrains Mono" font-size="5" letter-spacing="1">OBSERVER</text>
+                <text x="40" y="76" text-anchor="middle" fill="#7d8590" font-family="JetBrains Mono" font-size="4">HELTEC V4.3</text>
+                <!-- antenna -->
+                <line x1="40" y1="-2" x2="40" y2="20" stroke="#22c55e" stroke-width="1.2"/>
+                <circle cx="40" cy="-2" r="2" fill="#22c55e"/>
+                <text x="40" y="100" text-anchor="middle" fill="#22c55e" font-family="JetBrains Mono" font-size="5.5" letter-spacing="1">NL-KRT-OBS01</text>
+              </g>
+
+              <!-- Wireless link between the two -->
+              <g stroke="#22c55e" fill="none" stroke-width="1" stroke-dasharray="3 3" opacity="0.55">
+                <path d="M 80 60 Q 180 0 260 105">
+                  <animate attributeName="opacity" values="0;0.55;0" dur="3s" repeatCount="indefinite"/>
+                </path>
+              </g>
+              <text x="180" y="40" text-anchor="middle" fill="#7d8590" font-family="JetBrains Mono" font-size="6" letter-spacing="1.5">~ MESH ~</text>
+
+              <!-- Outbound MQTT arrow from observer toward edge of frame -->
+              <g stroke="#a78bfa" fill="none" stroke-width="1" opacity="0.7">
+                <path d="M 305 165 Q 335 175 350 200" stroke-dasharray="2 3"/>
+              </g>
+              <text x="318" y="155" fill="#a78bfa" font-family="JetBrains Mono" font-size="5" letter-spacing="1">MQTT</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Switch countdown banner: replaces the live stat-grid -->
+        <div class="switch-banner">
+          <div class="switch-banner-meta">
+            <span class="micro" style="color:var(--amber)">⚡ NETWERK-WIJZIGING · 9 MEI 2026</span>
+            <h3 class="switch-banner-title">The Switch · SF8 → SF7</h3>
+            <p>Het Nederlandse MeshCore-netwerk schakelt op <strong>9 mei</strong> over naar de Netherlands radio preset (SF7/CR5). Op <strong>13 juni</strong> volgt strict region forwarding. Deze repeater doet mee.</p>
+          </div>
+          <div class="switch-banner-counters">
+            <div class="counter">
+              <div class="counter-num" id="cd-switch-days">--</div>
+              <div class="counter-lbl">dagen tot switch</div>
+            </div>
+            <div class="counter">
+              <div class="counter-num" id="cd-strict-days">--</div>
+              <div class="counter-lbl">dagen tot strict region</div>
+            </div>
+            <a href="#switch" class="counter-cta">Lees meer →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================================================
+         01 · NODE IDENTITY (statisch)
+         ================================================= -->
+    <section id="identity">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-num">01 / IDENTITY</span>
+          <h2>Knooppunt­paspoort</h2>
+          <p class="lede">De setup bestaat uit twee nodes — een echte repeater op het dak die het werk doet, en een passieve observer indoor die metadata naar Cornmeister publiceert. Hieronder de operationele parameters en de public keys van beide.</p>
+        </div>
+
+        <div class="id-grid">
+          <!-- Operational parameters of the repeater -->
+          <div class="panel">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span>
+            <span class="panel-corner bl"></span><span class="panel-corner br"></span>
+
+            <h3>Repeater · operationele parameters</h3>
+            <dl class="id-table">
+              <div class="id-row"><dt>Node name</dt><dd><span class="accent" id="id-name">NL-UTG-KRT-REP01</span></dd></div>
+              <div class="id-row"><dt>Role</dt><dd>Repeater (relay-only) · MeshCore <span id="id-firmware">v1.15</span></dd></div>
+              <div class="id-row"><dt>Frequency</dt><dd><span id="id-freq">869.618</span> MHz</dd></div>
+              <div class="id-row"><dt>Preset (vanaf 9 mei)</dt><dd>Netherlands · BW 62.5 · <strong style="color:var(--amber)">SF7 / CR5</strong></dd></div>
+              <div class="id-row"><dt>TX power</dt><dd>+22 dBm <span style="color:var(--ink-mute)">(binnen 25 mW EIRP / 10% duty cycle)</span></dd></div>
+              <div class="id-row"><dt>Loop detect</dt><dd>minimal · <span style="color:var(--ink-mute)">v1.14+</span></dd></div>
+              <div class="id-row"><dt>Path hash</dt><dd>2-byte (mode 1)</dd></div>
+              <div class="id-row"><dt>Advert interval</dt><dd>flood: 50u · zero-hop: 240 min</dd></div>
+              <div class="id-row"><dt>Antenna</dt><dd>LongAP 3 dBi · 868 MHz · verticaal · dakmontage</dd></div>
+              <div class="id-row"><dt>Altitude</dt><dd><span id="id-alt">~5 m</span> boven maaiveld</dd></div>
+              <div class="id-row"><dt>Home scope</dt><dd><span class="scope-tag" style="font-size:0.75rem">nl-nh-utg</span></dd></div>
+            </dl>
+          </div>
+
+          <!-- Public keys for both nodes -->
+          <div class="panel keycard">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span>
+            <span class="panel-corner bl"></span><span class="panel-corner br"></span>
+
+            <div class="pubkey-block">
+              <div class="pubkey-head">
+                <h4 class="upper micro" style="color:var(--amber)">⛭ REPEATER · NL-UTG-KRT-REP01</h4>
+                <a href="https://cornmeister.nl/#/nodes/89115054326394fc1a0bb981b96688c5411ae9e30885de5424536828a7e3632c" target="_blank" rel="noopener" class="pubkey-link">on Cornmeister ↗</a>
+              </div>
+              <div class="pubkey">
+                89115054326394FC1A0BB981B96688C5<br>
+                411AE9E30885DE5424536828A7E3632C
+              </div>
+            </div>
+
+            <div class="pubkey-block" style="margin-top:1.5rem">
+              <div class="pubkey-head">
+                <h4 class="upper micro" style="color:#a78bfa">⛭ OBSERVER · NL-KRT-OBS01</h4>
+                <a href="https://cornmeister.nl/#/observers/63F3CBC39A83C96C4CF25C3D6EFE15AA0FC22876E63CDED7ED9E2DF83515FA1C" target="_blank" rel="noopener" class="pubkey-link">on Cornmeister ↗</a>
+              </div>
+              <div class="pubkey">
+                63F3CBC39A83C96C4CF25C3D6EFE15AA<br>
+                0FC22876E63CDED7ED9E2DF83515FA1C
+              </div>
+            </div>
+
+            <h4 class="upper micro" style="color:var(--ink-mute);margin-top:1.5rem">Regio scopes (repeater)</h4>
+            <div class="scope-list" style="margin-top:0.75rem;" id="kc-scopes">
+              <span class="scope-tag">eu</span>
+              <span class="scope-tag">europe</span>
+              <span class="scope-tag">nl</span>
+              <span class="scope-tag">bx</span>
+              <span class="scope-tag">nl-nh</span>
+              <span class="scope-tag">nl-nh-utg</span>
+            </div>
+            <p style="font-size:0.8125rem;color:var(--ink-mute);margin-top:0.875rem;line-height:1.6">
+              Volledige uitleg met parent-chain en CLI-commando's in sectie 06.
+            </p>
+
+            <h4 class="upper micro" style="color:var(--ink-mute);margin-top:1.25rem">Externe registers</h4>
+            <p style="font-size:0.8125rem;line-height:1.8;margin-top:0.5rem;">
+              <a href="https://map.meshcore.dev" target="_blank" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">map.meshcore.dev →</a><br>
+              <a href="https://www.meshnet.nl/nodelist_mc.html" target="_blank" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">meshnet.nl/nodelist_mc →</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================
+         02 · HARDWARE
+         ================================================= -->
+    <section id="hardware">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-num">02 / HARDWARE</span>
+          <h2>Twee nodes, <span class="display-italic">twee rollen</span></h2>
+          <p class="lede">De repeater is een <em>SenseCAP P1-Pro</em> op een dak — autonoom, op zonne-energie. De observer is een <em>Heltec V4.3 OLED</em> binnen die als room-server het mesh meeluistert en metadata via MQTT naar Cornmeister publiceert.</p>
+        </div>
+
+        <!-- Repeater (P1-Pro) -->
+        <div class="hw-grid">
+          <div class="hw-illu">
+            <svg viewBox="0 0 400 460" style="width:100%;max-width:340px;">
+              <defs>
+                <linearGradient id="solar-cell" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#1e3a5f"/>
+                  <stop offset="100%" stop-color="#0a1f3d"/>
+                </linearGradient>
+                <linearGradient id="enclosure" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#1c232c"/>
+                  <stop offset="100%" stop-color="#0d1117"/>
+                </linearGradient>
+              </defs>
+              <line x1="200" y1="20" x2="200" y2="80" stroke="#b1bac4" stroke-width="2.5"/>
+              <circle cx="200" cy="20" r="4" fill="#22c55e"/>
+              <rect x="80" y="80" width="240" height="160" fill="url(#solar-cell)" stroke="#3d4654" stroke-width="1.5" rx="2"/>
+              <g stroke="#0a1f3d" stroke-width="0.5">
+                <line x1="80" y1="120" x2="320" y2="120"/>
+                <line x1="80" y1="160" x2="320" y2="160"/>
+                <line x1="80" y1="200" x2="320" y2="200"/>
+                <line x1="120" y1="80" x2="120" y2="240"/>
+                <line x1="160" y1="80" x2="160" y2="240"/>
+                <line x1="200" y1="80" x2="200" y2="240"/>
+                <line x1="240" y1="80" x2="240" y2="240"/>
+                <line x1="280" y1="80" x2="280" y2="240"/>
+              </g>
+              <text x="320" y="98" fill="#7d8590" font-family="JetBrains Mono" font-size="8" text-anchor="end">5W</text>
+              <rect x="100" y="240" width="200" height="180" fill="url(#enclosure)" stroke="#3d4654" stroke-width="1.5" rx="6"/>
+              <circle cx="125" cy="265" r="3" fill="#22c55e">
+                <animate attributeName="opacity" values="1;0.4;1" dur="1.6s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="140" cy="265" r="3" fill="#22c55e" opacity="0.7"/>
+              <circle cx="155" cy="265" r="3" fill="#3d4654"/>
+              <text x="125" y="280" fill="#7d8590" font-family="JetBrains Mono" font-size="5" text-anchor="middle">MESH</text>
+              <text x="140" y="280" fill="#7d8590" font-family="JetBrains Mono" font-size="5" text-anchor="middle">CHG</text>
+              <text x="155" y="280" fill="#7d8590" font-family="JetBrains Mono" font-size="5" text-anchor="middle">USR</text>
+              <g transform="translate(115,300)"><rect width="24" height="80" fill="#232b35" stroke="#3d4654" rx="2"/><rect x="2" y="2" width="20" height="76" fill="#0d1117"/><text x="12" y="45" fill="#22c55e" font-family="JetBrains Mono" font-size="6" text-anchor="middle">18650</text></g>
+              <g transform="translate(149,300)"><rect width="24" height="80" fill="#232b35" stroke="#3d4654" rx="2"/><rect x="2" y="2" width="20" height="76" fill="#0d1117"/><text x="12" y="45" fill="#22c55e" font-family="JetBrains Mono" font-size="6" text-anchor="middle">18650</text></g>
+              <g transform="translate(227,300)"><rect width="24" height="80" fill="#232b35" stroke="#3d4654" rx="2"/><rect x="2" y="2" width="20" height="76" fill="#0d1117"/><text x="12" y="45" fill="#22c55e" font-family="JetBrains Mono" font-size="6" text-anchor="middle">18650</text></g>
+              <g transform="translate(261,300)"><rect width="24" height="80" fill="#232b35" stroke="#3d4654" rx="2"/><rect x="2" y="2" width="20" height="76" fill="#0d1117"/><text x="12" y="45" fill="#22c55e" font-family="JetBrains Mono" font-size="6" text-anchor="middle">18650</text></g>
+              <rect x="180" y="330" width="40" height="50" fill="#2d3540" stroke="#3d4654"/>
+              <text x="200" y="350" fill="#22c55e" font-family="JetBrains Mono" font-size="5" text-anchor="middle">SX1262</text>
+              <text x="200" y="360" fill="#7d8590" font-family="JetBrains Mono" font-size="4" text-anchor="middle">nRF52840</text>
+              <text x="200" y="370" fill="#7d8590" font-family="JetBrains Mono" font-size="4" text-anchor="middle">L76K GPS</text>
+              <rect x="190" y="400" width="20" height="6" fill="#0d1117" stroke="#3d4654"/>
+              <text x="200" y="416" fill="#7d8590" font-family="JetBrains Mono" font-size="5" text-anchor="middle">USB-C</text>
+              <rect x="60" y="240" width="40" height="180" fill="none" stroke="#3d4654" stroke-dasharray="2 3"/>
+              <text x="80" y="335" fill="#7d8590" font-family="JetBrains Mono" font-size="5" text-anchor="middle" transform="rotate(-90 80 335)">POLE / WALL MOUNT</text>
+              <text x="200" y="446" fill="#22c55e" font-family="Inter" font-weight="600" font-size="14" text-anchor="middle">SenseCAP P1-Pro</text>
+            </svg>
+          </div>
+
+          <div class="hw-specs">
+            <div class="hw-role-label">
+              <span class="role-badge">REPEATER</span>
+              <span class="hw-role-name">SenseCAP Solar Node P1-Pro</span>
+            </div>
+            <h3>Specificaties</h3>
+            <ul class="spec-list">
+              <li><span class="k">MCU</span><span class="v">Nordic <em>nRF52840</em> · ARM Cortex-M4F · 64 MHz</span></li>
+              <li><span class="k">Memory</span><span class="v">256 KB RAM · 1 MB Flash + 2 MB onboard</span></li>
+              <li><span class="k">LoRa chip</span><span class="v">Semtech <em>SX1262</em> · TXOP 22 dBm</span></li>
+              <li><span class="k">Frequency</span><span class="v">862 – 930 MHz · NL: <em>869.618</em></span></li>
+              <li><span class="k">GPS</span><span class="v">XIAO L76K · GPS / GLONASS / Galileo</span></li>
+              <li><span class="k">Bluetooth</span><span class="v">BLE 5.0 (BMS / config)</span></li>
+              <li><span class="k">Solar panel</span><span class="v">5 W geïntegreerd</span></li>
+              <li><span class="k">Battery</span><span class="v">4× 18650 · 3350 mAh · button-top</span></li>
+              <li><span class="k">Charging</span><span class="v">USB-C + solar (parallel)</span></li>
+              <li><span class="k">Antenna</span><span class="v"><em>LongAP 3 dBi</em> · 868 MHz · SMA</span></li>
+              <li><span class="k">Range (LOS)</span><span class="v">tot ~9 km open terrein</span></li>
+              <li><span class="k">Temp range</span><span class="v">−40 / +60 °C ontladen · 0 / +50 °C laden</span></li>
+              <li><span class="k">Mounting</span><span class="v">paal- + wandbeugels meegeleverd</span></li>
+              <li><span class="k">Cert</span><span class="v">FCC · CE</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Observer (Heltec V4.3) -->
+        <div class="hw-divider"></div>
+        <div class="hw-grid hw-grid--observer">
+          <div class="hw-specs">
+            <div class="hw-role-label">
+              <span class="role-badge role-badge--observer">OBSERVER · ROOM</span>
+              <span class="hw-role-name">Heltec WiFi LoRa 32 V4.3 · OLED</span>
+            </div>
+            <h3>Specificaties</h3>
+            <ul class="spec-list">
+              <li><span class="k">MCU</span><span class="v">Espressif <em>ESP32-S3</em> · dual-core 240 MHz · WiFi + BLE</span></li>
+              <li><span class="k">Memory</span><span class="v">512 KB SRAM · 8 MB Flash · 8 MB PSRAM</span></li>
+              <li><span class="k">LoRa chip</span><span class="v">Semtech <em>SX1262</em> · 22 dBm</span></li>
+              <li><span class="k">Frequency</span><span class="v">863 – 928 MHz · NL: <em>869.618</em></span></li>
+              <li><span class="k">Display</span><span class="v">0.96" OLED 128×64 (status read-out)</span></li>
+              <li><span class="k">USB</span><span class="v">USB-C · CP2102 UART bridge</span></li>
+              <li><span class="k">Power</span><span class="v">via USB · li-po backup connector aanwezig</span></li>
+              <li><span class="k">Rol</span><span class="v">Room server / observer (geen relay)</span></li>
+              <li><span class="k">Uplink</span><span class="v">WiFi → MQTT → cornmeister.nl</span></li>
+              <li><span class="k">Antenna</span><span class="v">stock 2 dBi rubber rod, SMA</span></li>
+              <li><span class="k">Mounting</span><span class="v">indoor, op bureau bij router</span></li>
+            </ul>
+          </div>
+
+          <div class="hw-illu">
+            <svg viewBox="0 0 400 380" style="width:100%;max-width:340px;">
+              <!-- antenna -->
+              <line x1="200" y1="20" x2="200" y2="70" stroke="#b1bac4" stroke-width="2"/>
+              <circle cx="200" cy="20" r="3.5" fill="#22c55e"/>
+              <text x="215" y="48" fill="#7d8590" font-family="JetBrains Mono" font-size="7">SX1262</text>
+
+              <!-- PCB body -->
+              <rect x="100" y="70" width="200" height="240" fill="#1c232c" stroke="#3d4654" stroke-width="1.5" rx="3"/>
+
+              <!-- OLED screen -->
+              <rect x="120" y="90" width="160" height="74" fill="#0d1117" stroke="#22c55e" stroke-width="1"/>
+              <text x="130" y="108" fill="#22c55e" font-family="JetBrains Mono" font-size="7">NL-KRT-OBS01</text>
+              <text x="130" y="120" fill="#22c55e" font-family="JetBrains Mono" font-size="6">869.618 MHz · SF7</text>
+              <text x="130" y="132" fill="#22c55e" font-family="JetBrains Mono" font-size="6">RSSI -78 · SNR 9.5</text>
+              <text x="130" y="144" fill="#22c55e" font-family="JetBrains Mono" font-size="6">MQTT: connected</text>
+              <polyline points="130,154 140,150 150,156 160,148 170,154 180,150 190,156 200,148 210,154 220,150 230,156 240,148 250,154 260,150 270,156"
+                        fill="none" stroke="#22c55e" stroke-width="0.6" opacity="0.7">
+                <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2s" repeatCount="indefinite"/>
+              </polyline>
+
+              <!-- ESP32 chip -->
+              <rect x="180" y="180" width="60" height="60" fill="#2d3540" stroke="#3d4654"/>
+              <text x="210" y="208" fill="#22c55e" font-family="JetBrains Mono" font-size="7" text-anchor="middle">ESP32-S3</text>
+              <text x="210" y="220" fill="#7d8590" font-family="JetBrains Mono" font-size="5" text-anchor="middle">+ WiFi</text>
+
+              <!-- LEDs -->
+              <circle cx="125" cy="180" r="2" fill="#22c55e">
+                <animate attributeName="opacity" values="1;0.3;1" dur="1.4s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="135" cy="180" r="2" fill="#facc15"/>
+
+              <!-- USB-C -->
+              <rect x="186" y="304" width="28" height="8" fill="#0d1117" stroke="#3d4654"/>
+              <text x="200" y="324" fill="#7d8590" font-family="JetBrains Mono" font-size="5" text-anchor="middle">USB-C</text>
+
+              <!-- side connector pins -->
+              <g fill="#7d8590">
+                <rect x="100" y="260" width="6" height="2"/>
+                <rect x="100" y="266" width="6" height="2"/>
+                <rect x="100" y="272" width="6" height="2"/>
+                <rect x="100" y="278" width="6" height="2"/>
+                <rect x="294" y="260" width="6" height="2"/>
+                <rect x="294" y="266" width="6" height="2"/>
+                <rect x="294" y="272" width="6" height="2"/>
+                <rect x="294" y="278" width="6" height="2"/>
+              </g>
+
+              <!-- desk surface line -->
+              <line x1="60" y1="320" x2="340" y2="320" stroke="#3d4654" opacity="0.5"/>
+              <line x1="80" y1="325" x2="76" y2="332" stroke="#3d4654"/>
+              <line x1="120" y1="325" x2="116" y2="332" stroke="#3d4654"/>
+              <line x1="160" y1="325" x2="156" y2="332" stroke="#3d4654"/>
+              <line x1="200" y1="325" x2="196" y2="332" stroke="#3d4654"/>
+              <line x1="240" y1="325" x2="236" y2="332" stroke="#3d4654"/>
+              <line x1="280" y1="325" x2="276" y2="332" stroke="#3d4654"/>
+              <line x1="320" y1="325" x2="316" y2="332" stroke="#3d4654"/>
+              <text x="200" y="345" fill="#7d8590" font-family="JetBrains Mono" font-size="5" text-anchor="middle">DESK / INDOOR</text>
+
+              <text x="200" y="370" fill="#22c55e" font-family="Inter" font-weight="600" font-size="14" text-anchor="middle">Heltec V4.3 OLED</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================
+         03 · LIVE (Cornmeister deep-link)
+         ================================================= -->
+    <section id="live">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-num">03 / LIVE</span>
+          <h2>Live <span class="display-italic">monitoring</span></h2>
+          <p class="lede">Geen eigen telemetrie-pijp meer — alle live data van deze repeater (en de bijbehorende observer) wordt naar <strong>Cornmeister.nl</strong> gepubliceerd. Daar zie je packets, traces, channels, neighbours en uptime in real-time.</p>
+        </div>
+
+        <div class="live-grid">
+          <!-- Repeater card -->
+          <a href="https://cornmeister.nl/#/nodes/89115054326394fc1a0bb981b96688c5411ae9e30885de5424536828a7e3632c"
+             target="_blank" rel="noopener"
+             class="panel live-card live-card--repeater">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span>
+            <span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <div class="live-card-meta">
+              <span class="role-badge">REPEATER</span>
+              <span class="live-card-arrow">↗</span>
+            </div>
+            <h3 class="live-card-name">NL-UTG-KRT-REP01</h3>
+            <p class="live-card-desc">SenseCAP P1-Pro op het dak. Doet het routing-werk — slaat geen berichten op, faciliteert alleen multi-hop.</p>
+            <div class="live-card-pubkey" title="public key">
+              <span class="micro" style="color:var(--ink-mute)">PUBKEY</span>
+              <code>89115054…a7e3632c</code>
+            </div>
+            <div class="live-card-cta">
+              Open op Cornmeister →
+            </div>
+          </a>
+
+          <!-- Observer card -->
+          <a href="https://cornmeister.nl/#/observers/63F3CBC39A83C96C4CF25C3D6EFE15AA0FC22876E63CDED7ED9E2DF83515FA1C"
+             target="_blank" rel="noopener"
+             class="panel live-card live-card--observer">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span>
+            <span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <div class="live-card-meta">
+              <span class="role-badge role-badge--observer">OBSERVER · ROOM</span>
+              <span class="live-card-arrow">↗</span>
+            </div>
+            <h3 class="live-card-name">NL-KRT-OBS01</h3>
+            <p class="live-card-desc">Heltec V4.3 OLED naast de repeater. Luistert mee op het mesh en publiceert metadata via MQTT naar Cornmeister.</p>
+            <div class="live-card-pubkey" title="public key">
+              <span class="micro" style="color:var(--ink-mute)">PUBKEY</span>
+              <code>63F3CBC3…83515FA1C</code>
+            </div>
+            <div class="live-card-cta">
+              Open op Cornmeister →
+            </div>
+          </a>
+        </div>
+
+        <!-- Architecture mini-diagram -->
+        <div class="live-arch">
+          <div class="live-arch-title micro">Hoe de data stroomt</div>
+          <div class="live-arch-row">
+            <div class="live-arch-step">
+              <div class="step-icon">📡</div>
+              <div class="step-text">
+                <strong>Repeater</strong>
+                <span>NL-UTG-KRT-REP01 zendt &amp; relayt MeshCore-pakketten</span>
+              </div>
+            </div>
+            <div class="arrow-step">↣</div>
+            <div class="live-arch-step">
+              <div class="step-icon">📻</div>
+              <div class="step-text">
+                <strong>Observer</strong>
+                <span>NL-KRT-OBS01 hoort het mesh passief mee</span>
+              </div>
+            </div>
+            <div class="arrow-step">↣</div>
+            <div class="live-arch-step">
+              <div class="step-icon">☁️</div>
+              <div class="step-text">
+                <strong>Cornmeister</strong>
+                <span>MQTT-feed met packets, traces &amp; analytics</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================
+         04 · COVERAGE (statisch)
+         ================================================= -->
+    <section id="coverage">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-num">04 / COVERAGE</span>
+          <h2>Bereik &amp; <span class="display-italic">topologie</span></h2>
+          <p class="lede">Wat haalbaar is hangt sterk af van antennehoogte, omgeving en ontvanger. Op vijf meter dakhoogte in een verstedelijkte omgeving gelden grofweg deze cijfers — voor de actuele topologie zie de live monitoring op Cornmeister.</p>
+        </div>
+
+        <div class="coverage-grid">
+          <div class="panel coverage-panel">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span>
+            <span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <h3>Realistische bereiken</h3>
+            <p style="color:var(--ink-dim);font-size:0.9375rem;line-height:1.7;margin-top:0.625rem;">
+              Op 869.618 MHz (Netherlands preset SF7/CR5 vanaf 9 mei 2026) met een LongAP 3 dBi staafantenne op ~5 m hoogte:
+            </p>
+            <ul class="coverage-list">
+              <li><strong>Companion → repeater:</strong> 0,5 – 2 km in de stad, 3 – 5 km met goede line-of-sight</li>
+              <li><strong>Repeater → repeater:</strong> 3 – 8 km bij goed zicht (LOS), incidenteel meer richting hoger gelegen sites</li>
+              <li><strong>Hop count:</strong> SF7 verlaagt gevoeligheid t.o.v. SF8 (~3 dB), maar drievoudige kanaalcapaciteit. Meerdere hops compenseren dit ruim binnen Noord-Holland</li>
+              <li><strong>Mesh learning:</strong> bij eerste DM wordt het pad geflood, daarna deterministisch via geleerde route</li>
+            </ul>
+          </div>
+
+          <div class="panel coverage-panel">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span>
+            <span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <h3>Live topologie</h3>
+            <p style="color:var(--ink-dim);font-size:0.9375rem;line-height:1.7;margin-top:0.625rem;">
+              Wie hoor ik direct, en wie hoor ik via een hop? De observer publiceert deze data live naar Cornmeister. Daar zie je per pakket welke nodes het hebben gerelayd en wat de path-statistieken zijn.
+            </p>
+            <a href="https://cornmeister.nl/#/observers/63F3CBC39A83C96C4CF25C3D6EFE15AA0FC22876E63CDED7ED9E2DF83515FA1C" target="_blank" rel="noopener" class="cta secondary" style="margin-top:1rem;">
+              Bekijk topologie op Cornmeister <span class="arrow">↗</span>
+            </a>
+
+            <h4 style="margin-top:2rem;font-family:var(--sans);font-size:1rem;font-weight:600;">Externe kaarten</h4>
+            <p style="margin-top:0.75rem;font-size:0.9375rem;line-height:1.8;">
+              <a href="https://map.meshcore.dev" target="_blank" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">map.meshcore.dev</a>
+              <span style="color:var(--ink-mute);"> · officiële wereldkaart van actieve nodes</span><br>
+              <a href="https://www.meshnet.nl/nodelist_mc.html" target="_blank" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">meshnet.nl/nodelist_mc</a>
+              <span style="color:var(--ink-mute);"> · Nederlandse community-kaart</span><br>
+              <a href="https://meshmapper.net" target="_blank" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">meshmapper.net</a>
+              <span style="color:var(--ink-mute);"> · alternatieve mesh-kaart</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================
+         05 · THE SWITCH (SF8 → SF7)
+         ================================================= -->
+    <section id="switch">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-num">05 / THE SWITCH</span>
+          <h2>The Switch · <span class="display-italic">SF8 → SF7</span></h2>
+          <p class="lede">Het Nederlandse MeshCore-netwerk schakelt op <strong>9 mei 2026</strong> over naar de officiële Netherlands radio preset. Deze repeater doet mee. Op <strong>13 juni 2026</strong> volgt strict region forwarding.</p>
+        </div>
+
+        <!-- Two-phase timeline -->
+        <div class="switch-phases">
+          <div class="phase-card phase-card--main">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span>
+            <span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <div class="phase-card-meta">
+              <span class="phase-tag">FASE 1 · 9 MEI 2026</span>
+              <div class="phase-countdown">
+                <span class="counter-num" id="cd-switch-days-2">--</span>
+                <span class="counter-lbl">dagen</span>
+              </div>
+            </div>
+            <h3 class="phase-card-title">Radio omschakelen — SF7</h3>
+            <p>Alle nodes schakelen tegelijkertijd om naar de nieuwe Netherlands preset. Vroeger overschakelen betekent tijdelijke isolatie van nodes die nog op SF8 staan.</p>
+            <table class="phase-spec">
+              <tr><td>Preset</td><td><strong>Netherlands</strong></td></tr>
+              <tr><td>SF / CR</td><td><strong>SF7 / CR5</strong></td></tr>
+              <tr><td>Frequentie</td><td><strong>869.618 MHz</strong></td></tr>
+              <tr><td>Bandbreedte</td><td><strong>62.5 kHz</strong></td></tr>
+              <tr><td>Min. firmware</td><td><strong>v1.15</strong></td></tr>
+              <tr><td>Advert interval</td><td><strong>≥ 50 uur</strong></td></tr>
+            </table>
+            <p class="phase-foot">Frequentie en bandbreedte blijven gelijk — alleen SF en CR veranderen. Het verschil in gevoeligheid is ~3 dB, maar de kanaalcapaciteit verdrievoudigt.</p>
+          </div>
+
+          <div class="phase-card phase-card--sub">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span>
+            <span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <div class="phase-card-meta">
+              <span class="phase-tag phase-tag--sub">FASE 8 · 13 JUNI 2026</span>
+              <div class="phase-countdown">
+                <span class="counter-num" id="cd-strict-days-2">--</span>
+                <span class="counter-lbl">dagen</span>
+              </div>
+            </div>
+            <h3 class="phase-card-title">Strict region forwarding</h3>
+            <p>Repeaters gaan packets <em>zonder</em> regio-tag actief weigeren. Het netwerk valt uiteen in verbonden regionale zones — congestie blijft lokaal, problemen cascaderen niet meer landelijk.</p>
+            <div class="phase-cli">
+              <span class="phase-cli-label">Op repeater:</span>
+              <code>region denyf *<br>region save</code>
+            </div>
+            <p class="phase-foot">Pas <strong>niet eerder</strong> dan 13 juni toe — anders worden berichten verworpen van nodes die nog niet gescoped zijn.</p>
+          </div>
+        </div>
+
+        <!-- Preparation steps overview -->
+        <div class="switch-steps">
+          <h3 class="switch-steps-title">Voorbereiding · 6 stappen vóór 9 mei</h3>
+          <div class="steps-grid">
+            <div class="step-mini">
+              <span class="step-mini-num">1</span>
+              <div>
+                <strong>Firmware v1.15+</strong>
+                <span>repeater &amp; companion app updaten</span>
+              </div>
+            </div>
+            <div class="step-mini">
+              <span class="step-mini-num">2</span>
+              <div>
+                <strong>Advert interval ≥ 50 u</strong>
+                <span>flood-adverts; zero-hop op 240 min</span>
+              </div>
+            </div>
+            <div class="step-mini">
+              <span class="step-mini-num">3</span>
+              <div>
+                <strong>Bots &amp; scripts uit</strong>
+                <span>geen polling, geen auto-replies</span>
+              </div>
+            </div>
+            <div class="step-mini">
+              <span class="step-mini-num">4</span>
+              <div>
+                <strong>Region scoping</strong>
+                <span><code>region put</code> &amp; default region</span>
+              </div>
+            </div>
+            <div class="step-mini">
+              <span class="step-mini-num">5</span>
+              <div>
+                <strong>Multi-byte path</strong>
+                <span><code>set path.hash.mode 1</code></span>
+              </div>
+            </div>
+            <div class="step-mini">
+              <span class="step-mini-num">6</span>
+              <div>
+                <strong>Loop &amp; duty cycle</strong>
+                <span><code>set loop.detect minimal · set dutycycle 10</code></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:2rem;font-size:0.875rem;color:var(--ink-dim);max-width:64ch;line-height:1.7;">
+          De volledige instructies staan op <a href="https://meshwiki.nl/wiki/The_switch" target="_blank" rel="noopener" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">meshwiki.nl/wiki/The_switch</a> en op <a href="https://settings.woodwar.com/nl/" target="_blank" rel="noopener" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">settings.woodwar.com/nl</a>. Het PDF-document met radio-test resultaten is te vinden in de bronvermelding op de wiki.
+        </p>
+      </div>
+    </section>
+
+    <!-- =================================================
+         06 · REGION CONFIG (statisch)
+         ================================================= -->
+    <section id="region">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-num">06 / REGION</span>
+          <h2>Regio's &amp; <span class="display-italic">scopes</span></h2>
+          <p class="lede">Vanaf <strong>13 juni 2026</strong> verwerpt deze repeater pakketten zonder regiotag (strict region forwarding). Hieronder de zes scopes waarop hij <em>wel</em> luistert — opgebouwd volgens de structuur uit <a href="https://meshwiki.nl/wiki/The_switch" target="_blank" rel="noopener" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">meshwiki.nl/The_switch</a>.</p>
+        </div>
+
+        <div class="region-grid">
+          <!-- HOME — most prominent -->
+          <div class="panel region-card home">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span><span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <div class="rk">
+              <span class="depth"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span>
+              Home · gemeente
+            </div>
+            <div class="rv">nl-nh-utg</div>
+            <div class="rd">Gemeente Uitgeest — fysieke locatie van deze repeater. Standaard-regio die wordt meegegeven aan de adverts. Set via <code style="font-family:var(--mono);color:var(--amber);">region home</code>.</div>
+            <div class="scope-chain">
+              <span class="crumb active">nl-nh-utg</span>
+              <span class="arrow">↑</span>
+              <span class="crumb crumb-implicit" title="parent registered, not flood-allowed">nl-haa</span>
+            </div>
+          </div>
+
+          <!-- Continent (standard MeshCore code) -->
+          <div class="panel region-card">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span><span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <div class="rk">
+              <span class="depth"><span class="on"></span><span></span><span></span><span></span></span>
+              Continent
+            </div>
+            <div class="rv">eu</div>
+            <div class="rd">Standaard MeshCore-code voor Europa. Voor verkeer dat over de landsgrens reist.</div>
+          </div>
+
+          <!-- Continent — operator-defined alias -->
+          <div class="panel region-card">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span><span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <div class="rk">
+              <span class="depth"><span class="on"></span><span></span><span></span><span></span></span>
+              Continent · alias
+            </div>
+            <div class="rv">europe</div>
+            <div class="rd">Voluitgeschreven variant naast <code style="font-family:var(--mono);color:var(--amber);">eu</code> — voor backwards-compat met operators die deze code gebruiken.</div>
+          </div>
+
+          <!-- Land -->
+          <div class="panel region-card">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span><span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <div class="rk">
+              <span class="depth"><span class="on"></span><span></span><span></span><span></span></span>
+              Land
+            </div>
+            <div class="rv">nl</div>
+            <div class="rd">Heel Nederland — landelijk publieke kanalen.</div>
+          </div>
+
+          <!-- Benelux -->
+          <div class="panel region-card">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span><span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <div class="rk">
+              <span class="depth"><span class="on"></span><span></span><span></span><span></span></span>
+              Benelux
+            </div>
+            <div class="rv">bx</div>
+            <div class="rd">Cross-border verkeer tussen NL, BE en LU — kleinere scope dan <code style="font-family:var(--mono);color:var(--amber);">eu</code>.</div>
+          </div>
+
+          <!-- Province -->
+          <div class="panel region-card">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span><span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <div class="rk">
+              <span class="depth"><span class="on"></span><span class="on"></span><span></span><span></span></span>
+              Provincie
+            </div>
+            <div class="rv">nl-nh</div>
+            <div class="rd">Noord-Holland — child van <code style="font-family:var(--mono);color:var(--amber);">nl</code>, regio waarbinnen lokale kanalen worden geflood.</div>
+          </div>
+        </div>
+
+        <p style="margin-top:1.5rem;font-size:0.875rem;color:var(--ink-dim);max-width:64ch;line-height:1.7;">
+          Zes scopes — vier roots (<code style="font-family:var(--mono);color:var(--amber);">eu</code>, <code style="font-family:var(--mono);color:var(--amber);">europe</code>, <code style="font-family:var(--mono);color:var(--amber);">nl</code>, <code style="font-family:var(--mono);color:var(--amber);">bx</code>) plus de keten <code style="font-family:var(--mono);color:var(--amber);">nl → nl-nh</code> en de home-base <code style="font-family:var(--mono);color:var(--amber);">nl-nh-utg</code> die geregistreerd is onder <code style="font-family:var(--mono);color:var(--amber);">nl-haa</code>. Voor het samenstellen van je eigen lijst zie de configurator in sectie 07.
+        </p>
+      </div>
+    </section>
+
+    <!-- =================================================
+         06 · CONFIGURATOR (embedded tool)
+         ================================================= -->
+    <section id="configurator">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-num">07 / CONFIGURATOR</span>
+          <h2>Region <span class="display-italic">configurator</span></h2>
+          <p class="lede">Klik je locatie aan, kies een dekking-radius, en de tool genereert het complete CLI-block voor jouw repeater. Inclusief automatische cross-border detectie als je dicht bij een provinciegrens zit.</p>
+        </div>
+
+        <div class="config-frame">
+          <iframe
+            src="https://joehoehoepi.github.io/MeshCore-Region-Configurator-NL/MeshCore%20Region%20Configurator%20by%20Infinity.html"
+            title="MeshCore Region Configurator NL"
+            loading="lazy"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            referrerpolicy="no-referrer">
+          </iframe>
+          <div class="config-meta">
+            <span>↗ <a href="https://joehoehoepi.github.io/MeshCore-Region-Configurator-NL/MeshCore%20Region%20Configurator%20by%20Infinity.html" target="_blank" rel="noopener">open in nieuw venster</a></span>
+            <span>by Infinity &amp; Brizzik · data via <a href="https://mesh-up.nl" target="_blank" rel="noopener">Mesh-Up.nl</a> · <a href="https://github.com/Joehoehoepi/MeshCore-Region-Configurator-NL" target="_blank" rel="noopener">GitHub</a></span>
+          </div>
+        </div>
+
+        <p style="margin-top:1.5rem;font-size:0.875rem;color:var(--ink-dim);max-width:64ch;line-height:1.7;">
+          De tool wordt direct vanaf <code style="font-family:var(--mono);color:var(--amber);">joehoehoepi.github.io</code> ingeladen — GitHub Pages serveert altijd de laatste versie uit de <code style="font-family:var(--mono);color:var(--amber);">main</code> branch, dus nieuwe commits en bugfixes komen automatisch door zonder dat deze pagina aangepast hoeft te worden. Voor offline gebruik kun je de
+          <a href="https://github.com/Joehoehoepi/MeshCore-Region-Configurator-NL/releases" target="_blank" rel="noopener" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">single-file HTML downloaden</a>
+          van de releases-pagina.
+        </p>
+      </div>
+    </section>
+
+    <!-- =================================================
+         06 · WHAT IS MESHCORE (statisch)
+         ================================================= -->
+    <section id="meshcore">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-num">08 / PRIMER</span>
+          <h2>Wat is <span class="display-italic">MeshCore</span>?</h2>
+          <p class="lede">Een lichtgewicht hybride routing-protocol voor LoRa-pakketradio's. Anders dan Meshtastic: leert paden in plaats van alles te flooden.</p>
+        </div>
+
+        <div class="edu-grid">
+          <div class="panel edu-card"><span class="panel-corner tl"></span><span class="panel-corner tr"></span><span class="panel-corner bl"></span><span class="panel-corner br"></span><span class="num">i</span><h4>Smart routing</h4><p>Eerste DM floodt het netwerk om de bestemming te vinden. De return-ack legt het pad vast, daarna gaan berichten deterministisch via de geleerde route — minder ether-vervuiling, hogere doorvoer.</p></div>
+          <div class="panel edu-card"><span class="panel-corner tl"></span><span class="panel-corner tr"></span><span class="panel-corner bl"></span><span class="panel-corner br"></span><span class="num">ii</span><h4>Drie rollen</h4><p><strong style="color:var(--ink);">Companion</strong> = jouw telefoon-node (geen relay). <strong style="color:var(--ink);">Repeater</strong> = relay-only, het ruggengraat-knooppunt zoals deze. <strong style="color:var(--ink);">Room server</strong> = BBS-achtige opslag voor groepskanalen.</p></div>
+          <div class="panel edu-card"><span class="panel-corner tl"></span><span class="panel-corner tr"></span><span class="panel-corner bl"></span><span class="panel-corner br"></span><span class="num">iii</span><h4>End-to-end encrypted</h4><p>AES-128 voor berichtinhoud, Ed25519 voor advert-signing. Repeaters zien envelope-info maar niet de payload. Geen centrale server, geen metadata-spoor naar derden.</p></div>
+        </div>
+
+        <div class="edu-grid" style="margin-top:1.5rem;">
+          <div class="panel edu-card"><span class="panel-corner tl"></span><span class="panel-corner tr"></span><span class="panel-corner bl"></span><span class="panel-corner br"></span><span class="num">iv</span><h4>Self-healing</h4><p>Valt een repeater uit? Dan probeert de client 3× het oude pad, en floodt op de laatste retry een nieuw pad uit. Het mesh routeert vanzelf om gaten heen.</p></div>
+          <div class="panel edu-card"><span class="panel-corner tl"></span><span class="panel-corner tr"></span><span class="panel-corner bl"></span><span class="panel-corner br"></span><span class="num">v</span><h4>Off-grid &amp; legaal</h4><p>868 MHz ISM-band — geen vergunning nodig in EU. Werkt zonder internet, zonder zendmasten, zonder abonnement. Goed voor noodscenario's én voor de lol.</p></div>
+          <div class="panel edu-card"><span class="panel-corner tl"></span><span class="panel-corner tr"></span><span class="panel-corner bl"></span><span class="panel-corner br"></span><span class="num">vi</span><h4>Open ecosysteem</h4><p>Open source firmware, apps voor iOS, Android, web, Linux/macOS/Windows. Werkt met o.a. Heltec, RAK, LilyGo, T-Deck en — natuurlijk — de SenseCAP P1-Pro.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================
+         07 · ONBOARDING (statisch)
+         ================================================= -->
+    <section id="aansluiten">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-num">09 / ONBOARDING</span>
+          <h2>Aansluiten op de mesh</h2>
+          <p class="lede">In een uurtje ben je op de lucht. Je hebt alleen een LoRa-companion nodig (Heltec V3 of LilyGo T-Echo werken prima) en een telefoon.</p>
+        </div>
+
+        <div class="steps">
+          <div class="step"><div class="step-num"></div><div class="step-body"><h4>Hardware kiezen</h4><p>Een betaalbare 868 MHz LoRa-companion. Populaire keuzes: <strong>Heltec V3</strong> (~€25), <strong>LilyGo T-Echo</strong> (e-ink, met GPS), of <strong>RAK Wisblock</strong> voor wie wil bouwen. Let op: 868 MHz variant, niet de US-versie van 915 MHz.</p></div></div>
+          <div class="step"><div class="step-num"></div><div class="step-body"><h4>Firmware v1.15+</h4><p>Open <code>flasher.meshcore.dev</code> in <strong>Chrome of Edge</strong> (Web Serial werkt niet in Firefox/Safari). Sluit aan via USB-C, kies je device, kies <em>Companion firmware</em> versie <strong>1.15 of nieuwer</strong>. v1.15 is verplicht voor The Switch (region scoping &amp; strict forwarding).</p></div></div>
+          <div class="step"><div class="step-num"></div><div class="step-body"><h4>App installeren</h4><p>De officiële <strong>MeshCore</strong> app (iOS / Android / web). Niet de Meshtastic-app, dat is een ander protocol — verwarring nummer één. Pair je device via Bluetooth of USB.</p></div></div>
+          <div class="step"><div class="step-num"></div><div class="step-body"><h4>Netherlands preset</h4><p>In de app: <em>Settings → Radio → Choose Preset → <code>Netherlands</code></em>. Dit zet alle parameters in één keer goed: <strong>SF7 / CR5 / 869.618 MHz / 62.5 kHz</strong>. Vóór 9 mei 2026 stond NL nog op SF8 — vanaf die datum is <code>Netherlands</code> de juiste keuze.</p></div></div>
+          <div class="step"><div class="step-num"></div><div class="step-body"><h4>Regio scope</h4><p>Voeg in <em>Manage Regions</em> minimaal <code>eu</code>, <code>nl</code> en je provinciecode (bv. <code>nl-nh</code> voor Noord-Holland) toe en zet ze op <em>Allow Flood</em>. Optioneel <code>bx</code> voor Benelux. In <em>Experimental Settings</em> zet je <em>Default Region</em> op <code>nl</code>. De configurator in sectie 07 doet dit automatisch.</p></div></div>
+          <div class="step"><div class="step-num"></div><div class="step-body"><h4>Multi-byte path</h4><p>In <em>Experimental Settings</em>: zet <em>Default Path Hash Size</em> op <strong>2-byte</strong>. Hierdoor krijgen je berichten een 2-byte path hash mee, wat het netwerk nodig heeft voor multi-byte path tracing.</p></div></div>
+          <div class="step"><div class="step-num"></div><div class="step-body"><h4>Eerste advert</h4><p>Druk in de app op <em>Advert</em> (flood). Binnen 1–3 minuten zie je deze repeater en andere buren in je contactenlijst verschijnen. Welcome to the mesh.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================
+         09 · FAQ (statisch)
+         ================================================= -->
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-num">10 / FAQ</span>
+          <h2>Veelgestelde vragen</h2>
+          <p class="lede">Korte antwoorden voor wie hier voor het eerst is.</p>
+        </div>
+
+        <div class="faq-grid">
+          <div>
+            <h3 class="faq-col-title micro" style="color:var(--amber)">⚡ THE SWITCH · 9 MEI 2026</h3>
+            <details class="faq"><summary>Wat verandert er op 9 mei 2026?</summary><p>Het hele Nederlandse MeshCore-netwerk schakelt van <strong>SF8</strong> naar <strong>SF7</strong>. Coding rate gaat van CR8 naar CR5. Frequentie en bandbreedte blijven gelijk (869.618 MHz, 62.5 kHz). Het netto effect: ~3× meer kanaalcapaciteit, vergelijkbare gevoeligheid (–3 dB).</p></details>
+            <details class="faq"><summary>Moet ik zelf iets doen als gebruiker?</summary><p>Ja. Update je companion-firmware naar v1.15+, zet de <code>Netherlands</code> preset, voeg regio-scopes toe, en pas op switchdag de nieuwe radio-instellingen toe. Volledige stappen op <a href="https://meshwiki.nl/wiki/The_switch" target="_blank" rel="noopener">meshwiki.nl/The_switch</a>. Doe je niets, dan word je tijdelijk geïsoleerd van de rest van het netwerk.</p></details>
+            <details class="faq"><summary>Wat als mijn companion app op SF8 blijft?</summary><p>Dan kun je niet meer met SF7-nodes praten — verschillende spreading factors zijn niet compatibel. Je hoort wat van anderen, maar niet van mensen die al overgeschakeld zijn. Daarom is de coördinatie belangrijk.</p></details>
+            <details class="faq"><summary>En 13 juni — strict region forwarding?</summary><p>Vanaf die datum verwerpt deze repeater (en de meeste andere) packets <em>zonder</em> regio-scope. Heb je je companion app correct geconfigureerd vóór die datum, dan merk je niets. Heb je geen scopes ingesteld, dan komen je berichten niet meer door.</p></details>
+            <details class="faq"><summary>Doet deze repeater al mee aan The Switch?</summary><p>Ja, op switchdag schakelt deze automatisch over. Hij draait al firmware v1.15, heeft de regio-scopes geconfigureerd, en advert interval staat op de minimale 50 uur. Strict region forwarding wordt op 13 juni geactiveerd.</p></details>
+          </div>
+          <div>
+            <h3 class="faq-col-title micro" style="color:var(--ink-mute)">▽ ALGEMEEN</h3>
+            <details class="faq"><summary>Heb ik een vergunning nodig?</summary><p>Nee. MeshCore werkt op de 868 MHz ISM-band, vergunningvrij in de hele EU. Mits je binnen het ETSI-vermogen (25 mW EIRP) en de duty-cycle limieten blijft (10%), is dit volledig legaal voor iedereen.</p></details>
+            <details class="faq"><summary>Wat kost een eigen node?</summary><p>Een Heltec V3 als companion: rond de €25. Een complete solar-repeater zoals de SenseCAP P1-Pro: ~€140–180. Geen abonnement, geen maandkosten. Stroomverbruik ~0.3 W = onder de €1 per jaar.</p></details>
+            <details class="faq"><summary>Werkt het zonder internet?</summary><p>Volledig. Het mesh staat los van het internet — dat is precies het idee. Je telefoon praat via BLE met je companion, en die praat via LoRa met de mesh. Stroom uit, zendmasten down? Mesh draait door.</p></details>
+            <details class="faq"><summary>Kan iedereen mijn berichten lezen?</summary><p>Direct messages zijn AES-128 encrypted tussen jouw key en de bestemming. Repeaters relayen alleen de envelope. Public channels zijn wel publiek leesbaar — net als een radiokanaal.</p></details>
+            <details class="faq"><summary>Kan ik berichten naar Meshtastic sturen?</summary><p>Nee. Het zijn verschillende protocollen op dezelfde hardware. Je kunt dezelfde radio re-flashen tussen Meshtastic en MeshCore, maar niet tegelijk gebruiken.</p></details>
+            <details class="faq"><summary>Hoe ver gaat een bericht?</summary><p>Direct (1 hop): paar honderd meter in de stad, kilometers met dakantennes. Met multi-hops over de mesh: tientallen kilometers makkelijk haalbaar in goed gedekt gebied.</p></details>
+            <details class="faq"><summary>Wat doet de observer hier eigenlijk?</summary><p>De observer (Heltec V4.3) zendt zelf niets — hij luistert passief mee op het mesh en publiceert metadata (welke packets, RSSI, paden) via MQTT naar Cornmeister. Zo is jouw mesh-activiteit publiek inzichtelijk zonder dat je het mesh extra belast.</p></details>
+            <details class="faq"><summary>Wat als de stroom uitvalt?</summary><p>De repeater niet — die is solar-powered met 4× 18650 cellen, reserve van 5–7 dagen zonder zon. De observer zit op het stopcontact: die valt wél uit, maar dat raakt alleen de monitoring naar Cornmeister, niet het mesh-verkeer zelf.</p></details>
+            <details class="faq"><summary>Hoe word ik onderdeel van de NL community?</summary><p>Telegram-groep <em>@meshcorenet</em> voor de Nederlandse community. Zet je node op de community-kaart via meshnet.nl. Voor technische diepte: de internationale Discord van MeshCore.</p></details>
+            <details class="faq"><summary>Kan ik deze pagina forken?</summary><p>Ja — een single-file HTML, alle config in één <code>window.MESH_CONFIG</code> object bovenaan het script. Pas naam, locatie en pubkeys aan en je hebt jouw eigen repeater-pagina. 100% statisch, geen backend.</p></details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =================================================
+       FOOTER
+       ================================================= -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-mark">
+          <h4 id="footer-nodename">NL-UTG-KRT-REP01</h4>
+          <p style="color:var(--ink-mute);font-size:0.875rem;line-height:1.7;">
+            Een solar-powered MeshCore repeater op een dak in Noord-Holland.
+            Onderdeel van het wereldwijde MeshCore-mesh — onafhankelijk van internet, zendmasten en abonnementen.
+          </p>
+          <p style="margin-top:1rem;font-family:var(--mono);font-size:0.6875rem;color:var(--ink-mute);letter-spacing:0.1em;line-height:1.9;">
+            ⛭ repeater: <span id="footer-pubkey-repeater">8911505…7e3632c</span><br>
+            ⛭ observer: <span id="footer-pubkey-observer">63F3CBC…3515FA1C</span><br>
+            ⛭ operator: <span id="footer-operator">NL-KRT-SVN-01</span><br>
+            ⛭ hardware: <a href="https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-Pro-for-Meshtastic-LoRa-p-6412.html" target="_blank" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">SenseCAP P1-Pro</a>
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Mesh</h5>
+          <a href="https://meshcore.io" target="_blank">meshcore.io</a>
+          <a href="https://github.com/meshcore-dev/MeshCore" target="_blank">GitHub repo</a>
+          <a href="https://meshcore.io/flasher" target="_blank">Web flasher</a>
+          <a href="https://tennmesh.com" target="_blank">tennmesh.com</a>
+        </div>
+        <div class="footer-col">
+          <h5>Kaarten</h5>
+          <a href="https://map.meshcore.dev" target="_blank">map.meshcore.dev</a>
+          <a href="https://meshmapper.net" target="_blank">meshmapper.net</a>
+          <a href="https://staging.on8ar.eu/#/map" target="_blank">on8ar.eu/map</a>
+          <a href="https://mc-radar.woodwar.com/test-inspector" target="_blank">mc-radar inspector</a>
+        </div>
+        <div class="footer-col">
+          <h5>Tools</h5>
+          <a href="https://cornmeister.nl" target="_blank">cornmeister.nl</a>
+          <a href="https://analyzer.letsmesh.net/" target="_blank">analyzer.letsmesh.net</a>
+          <a href="https://settings.woodwar.com/nl/" target="_blank">settings.woodwar.com</a>
+          <a href="https://mc-radar.woodwar.com/mesh-health" target="_blank">mesh-health monitor</a>
+          <a href="https://www.mesh-up.nl/tools/kaart-van-regiocodes/" target="_blank">mesh-up regiocodes</a>
+          <a href="https://joehoehoepi.github.io/MeshCore-Region-Configurator-NL/MeshCore%20Region%20Configurator%20by%20Infinity.html" target="_blank">region configurator</a>
+          <a href="https://www.mesh-up.nl/voor-gevorderden/nrf52-otafix/" target="_blank">nRF52 OTA-fix</a>
+        </div>
+        <div class="footer-col">
+          <h5>Nederland</h5>
+          <a href="https://meshwiki.nl/" target="_blank">meshwiki.nl</a>
+          <a href="https://www.meshnet.nl" target="_blank">meshnet.nl</a>
+          <a href="https://www.localmesh.nl" target="_blank">localmesh.nl</a>
+          <a href="https://www.meshcore.nl" target="_blank">meshcore.nl</a>
+          <a href="https://valleirug.nl/" target="_blank">valleirug.nl</a>
+          <a href="https://t.me/meshcorenet" target="_blank">Telegram @meshcorenet</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="footer-year">2026</span> · <span id="footer-obsname">NL-KRT-OBS01</span> · operator <span class="mono">NL-KRT-SVN-01</span> · No rights reserved · MIT-style</span>
+        <span id="footer-clock">--:--:-- · UTC</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =================================================
+       SCRIPT
+       ================================================= -->
+  <script>
+    /* =========================================================
+       CONFIG — pas hier je eigen waardes aan
+       ========================================================= */
+    window.MESH_CONFIG = {
+      // Repeater (P1-Pro) — doet het werk
+      nodeName:        'NL-UTG-KRT-REP01',
+      pubkeyRepeater:  '89115054326394FC1A0BB981B96688C5411AE9E30885DE5424536828A7E3632C',
+      cornmeisterRep:  'https://cornmeister.nl/#/nodes/89115054326394fc1a0bb981b96688c5411ae9e30885de5424536828a7e3632c',
+
+      // Observer (Heltec V4.3 OLED) — luistert mee, publiceert via MQTT
+      observerName:    'NL-KRT-OBS01',
+      pubkeyObserver:  '63F3CBC39A83C96C4CF25C3D6EFE15AA0FC22876E63CDED7ED9E2DF83515FA1C',
+      cornmeisterObs:  'https://cornmeister.nl/#/observers/63F3CBC39A83C96C4CF25C3D6EFE15AA0FC22876E63CDED7ED9E2DF83515FA1C',
+
+      // Operator
+      operator:        'NL-KRT-SVN-01',
+
+      // Site
+      location:        'Noord-Holland · NL · ~Uitgeest',
+      geo:             '52.51°N, 4.71°E · ±2 km',
+      altitudeText:    '5 m · dakmontage',
+      sinceISO:        '2026-04-14T08:00:00Z',
+
+      // Switch dates (NL community)
+      switchDate:      '2026-05-09T00:00:00+02:00',
+      strictDate:      '2026-06-13T00:00:00+02:00',
+    };
+
+    /* =========================================================
+       UTIL
+       ========================================================= */
+    const $ = id => document.getElementById(id);
+
+    function shortKey(hex, head = 8, tail = 8) {
+      if (!hex) return '';
+      return hex.slice(0, head) + '…' + hex.slice(-tail);
+    }
+
+    function daysUntil(iso) {
+      const target = new Date(iso).getTime();
+      const now = Date.now();
+      const ms = target - now;
+      if (ms <= 0) return 0;
+      return Math.ceil(ms / 86400000);
+    }
+
+    /* =========================================================
+       HYDRATE — fill in templated values from CONFIG
+       ========================================================= */
+    function hydrate() {
+      const c = window.MESH_CONFIG;
+
+      // Brand & hero name
+      const brandEl = $('brand-name');
+      if (brandEl) brandEl.textContent = c.nodeName;
+      const heroEl = $('hero-name');
+      if (heroEl) heroEl.textContent = c.nodeName;
+
+      // Hero meta
+      const locEl = $('hero-loc'); if (locEl) locEl.textContent = c.location;
+      const geoEl = $('hero-geo'); if (geoEl) geoEl.textContent = c.geo;
+      const altEl = $('hero-alt'); if (altEl) altEl.textContent = c.altitudeText;
+      const sinceEl = $('hero-since');
+      if (sinceEl) sinceEl.textContent = c.sinceISO.slice(0, 10);
+
+      // Footer pubkey (repeater) + operator
+      const fpkEl = $('footer-pubkey-repeater');
+      if (fpkEl) fpkEl.textContent = shortKey(c.pubkeyRepeater);
+      const fopkEl = $('footer-pubkey-observer');
+      if (fopkEl) fopkEl.textContent = shortKey(c.pubkeyObserver);
+      const fopEl = $('footer-operator');
+      if (fopEl) fopEl.textContent = c.operator;
+      const fnodeEl = $('footer-nodename');
+      if (fnodeEl) fnodeEl.textContent = c.nodeName;
+      const fobsEl = $('footer-obsname');
+      if (fobsEl) fobsEl.textContent = c.observerName;
+
+      // Footer year + UTC clock
+      const yearEl = $('footer-year');
+      if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+      const tickClock = () => {
+        const t = new Date();
+        const hh = String(t.getUTCHours()).padStart(2, '0');
+        const mm = String(t.getUTCMinutes()).padStart(2, '0');
+        const ss = String(t.getUTCSeconds()).padStart(2, '0');
+        const el = $('footer-clock');
+        if (el) el.textContent = `${hh}:${mm}:${ss} · UTC`;
+      };
+      tickClock();
+      setInterval(tickClock, 1000);
+
+      // Switch countdowns
+      const updCountdowns = () => {
+        const sw = daysUntil(c.switchDate);
+        const st = daysUntil(c.strictDate);
+        const sw1 = $('cd-switch-days'); if (sw1) sw1.textContent = sw;
+        const sw2 = $('cd-switch-days-2'); if (sw2) sw2.textContent = sw;
+        const st1 = $('cd-strict-days'); if (st1) st1.textContent = st;
+        const st2 = $('cd-strict-days-2'); if (st2) st2.textContent = st;
+
+        // After switch, swap the label
+        if (sw === 0) {
+          [sw1, sw2].forEach(el => {
+            if (el) {
+              el.textContent = '✓';
+              const lbl = el.parentElement?.querySelector('.counter-lbl');
+              if (lbl) lbl.textContent = 'switch live';
+            }
+          });
+        }
+        if (st === 0) {
+          [st1, st2].forEach(el => {
+            if (el) {
+              el.textContent = '✓';
+              const lbl = el.parentElement?.querySelector('.counter-lbl');
+              if (lbl) lbl.textContent = 'strict live';
+            }
+          });
+        }
+      };
+      updCountdowns();
+      setInterval(updCountdowns, 60_000);
+    }
+
+    /* =========================================================
+       BOOT
+       ========================================================= */
+    document.addEventListener('DOMContentLoaded', hydrate);
+  </script>
+</body>
+</html>

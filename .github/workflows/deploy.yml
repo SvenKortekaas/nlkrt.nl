@@ -1,0 +1,32 @@
+name: Deploy to Cloud86
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:   # handmatig kunnen triggeren via GitHub UI
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Deploy via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASS }}
+          port: ${{ secrets.SFTP_PORT }}
+          protocol: ftps              # bij Cloud86: ftps (FTP over TLS)
+          server-dir: ./
+          local-dir: ./
+          dangerous-clean-slate: false   # bestaande files niet wissen
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/SETUP.md
+            **/.gitignore
+            **/README.md

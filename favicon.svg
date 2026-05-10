@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- background -->
+  <rect width="64" height="64" rx="12" fill="#0d1117"/>
+
+  <!-- hex mesh pattern (3 connected hexagons forming a mesh) -->
+  <g fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- top hex -->
+    <polygon points="32,8 44,15 44,29 32,36 20,29 20,15"/>
+    <!-- bottom-left hex -->
+    <polygon points="14,32 26,39 26,53 14,60 2,53 2,39"
+             transform="translate(4 -4)"
+             stroke-opacity="0.6"/>
+    <!-- bottom-right hex -->
+    <polygon points="14,32 26,39 26,53 14,60 2,53 2,39"
+             transform="translate(34 -4)"
+             stroke-opacity="0.6"/>
+  </g>
+
+  <!-- center node dot -->
+  <circle cx="32" cy="22" r="3" fill="#22c55e"/>
+
+  <!-- signal arcs from center -->
+  <g fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" opacity="0.8">
+    <path d="M 22 18 Q 32 12 42 18"/>
+    <path d="M 18 22 Q 32 8 46 22" opacity="0.5"/>
+  </g>
+</svg>
