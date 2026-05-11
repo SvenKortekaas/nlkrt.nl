@@ -1022,7 +1022,7 @@
 
         <div class="hero-meta">
           <span class="pill amber">SenseCAP Solar P1-Pro</span>
-          <span class="pill" id="pill-radio">Radio · 869.618 MHz · SF7/CR5 vanaf 9 mei</span>
+          <span class="pill" id="pill-radio">Radio · 869.618 MHz · SF7/CR5 · NL preset</span>
           <span class="pill">Firmware v1.15</span>
         </div>
 
@@ -1153,7 +1153,7 @@
           <div class="switch-banner-meta">
             <span class="micro" style="color:var(--amber)">⚡ NETWERK-WIJZIGING · 9 MEI 2026</span>
             <h3 class="switch-banner-title">The Switch · SF8 → SF7</h3>
-            <p>Het Nederlandse MeshCore-netwerk schakelt op <strong>9 mei</strong> over naar de Netherlands radio preset (SF7/CR5). Op <strong>13 juni</strong> volgt strict region forwarding. Deze repeater doet mee.</p>
+            <p>Het Nederlandse MeshCore-netwerk is op <strong>9 mei</strong> overgeschakeld naar de Netherlands radio preset (SF7/CR5). Op <strong>13 juni</strong> volgt strict region forwarding. Deze repeater doet mee.</p>
           </div>
           <div class="switch-banner-counters">
             <div class="counter">
@@ -1456,7 +1456,7 @@
               <span class="live-card-arrow">↗</span>
             </div>
             <h3 class="live-card-name">NL-UTG-KRT-REP01</h3>
-            <p class="live-card-desc">SenseCAP P1-Pro op het dak. Doet het routing-werk — slaat geen berichten op, faciliteert alleen multi-hop.</p>
+            <p class="live-card-desc">SenseCAP P1-Pro op het dak. Doet het routing-werk — slaat geen berichten op, relayt alleen multi-hop.</p>
             <div class="live-card-pubkey" title="public key">
               <span class="micro" style="color:var(--ink-mute)">PUBKEY</span>
               <code>89115054…a7e3632c</code>
@@ -1580,7 +1580,7 @@
         <div class="section-head">
           <span class="section-num">05 / THE SWITCH</span>
           <h2>The Switch · <span class="display-italic">SF8 → SF7</span></h2>
-          <p class="lede">Het Nederlandse MeshCore-netwerk schakelt op <strong>9 mei 2026</strong> over naar de officiële Netherlands radio preset. Deze repeater doet mee. Op <strong>13 juni 2026</strong> volgt strict region forwarding.</p>
+          <p class="lede">Het Nederlandse MeshCore-netwerk is op <strong>9 mei 2026</strong> overgeschakeld naar de officiële Netherlands radio preset. Deze repeater deed mee. Op <strong>13 juni 2026</strong> volgt strict region forwarding.</p>
         </div>
 
         <!-- Two-phase timeline -->
@@ -1595,8 +1595,8 @@
                 <span class="counter-lbl">dagen</span>
               </div>
             </div>
-            <h3 class="phase-card-title">Radio omschakelen — SF7</h3>
-            <p>Alle nodes schakelen tegelijkertijd om naar de nieuwe Netherlands preset. Vroeger overschakelen betekent tijdelijke isolatie van nodes die nog op SF8 staan.</p>
+            <h3 class="phase-card-title">Radio omgeschakeld — SF7</h3>
+            <p>Alle nodes zijn op 9 mei tegelijkertijd omgeschakeld naar de nieuwe Netherlands preset. Nodes die niet zijn meegegaan zijn tijdelijk geïsoleerd van de rest van het netwerk.</p>
             <table class="phase-spec">
               <tr><td>Preset</td><td><strong>Netherlands</strong></td></tr>
               <tr><td>SF / CR</td><td><strong>SF7 / CR5</strong></td></tr>
@@ -1612,7 +1612,7 @@
             <span class="panel-corner tl"></span><span class="panel-corner tr"></span>
             <span class="panel-corner bl"></span><span class="panel-corner br"></span>
             <div class="phase-card-meta">
-              <span class="phase-tag phase-tag--sub">FASE 8 · 13 JUNI 2026</span>
+              <span class="phase-tag phase-tag--sub">FASE 2 · 13 JUNI 2026</span>
               <div class="phase-countdown">
                 <span class="counter-num" id="cd-strict-days-2">--</span>
                 <span class="counter-lbl">dagen</span>
@@ -1630,7 +1630,7 @@
 
         <!-- Preparation steps overview -->
         <div class="switch-steps">
-          <h3 class="switch-steps-title">Voorbereiding · 6 stappen vóór 9 mei</h3>
+          <h3 class="switch-steps-title">Hoe er is voorbereid · 6 stappen</h3>
           <div class="steps-grid">
             <div class="step-mini">
               <span class="step-mini-num">1</span>
@@ -1741,7 +1741,7 @@
               Land
             </div>
             <div class="rv">nl</div>
-            <div class="rd">Heel Nederland — landelijk publieke kanalen.</div>
+            <div class="rd">Heel Nederland — landelijke publieke kanalen.</div>
           </div>
 
           <!-- Benelux -->
@@ -1868,11 +1868,11 @@
         <div class="faq-grid">
           <div>
             <h3 class="faq-col-title micro" style="color:var(--amber)">⚡ THE SWITCH · 9 MEI 2026</h3>
-            <details class="faq"><summary>Wat verandert er op 9 mei 2026?</summary><p>Het hele Nederlandse MeshCore-netwerk schakelt van <strong>SF8</strong> naar <strong>SF7</strong>. Coding rate gaat van CR8 naar CR5. Frequentie en bandbreedte blijven gelijk (869.618 MHz, 62.5 kHz). Het netto effect: ~3× meer kanaalcapaciteit, vergelijkbare gevoeligheid (–3 dB).</p></details>
+            <details class="faq"><summary>Wat is er veranderd op 9 mei 2026?</summary><p>Het hele Nederlandse MeshCore-netwerk heeft op 9 mei geschakeld van <strong>SF8</strong> naar <strong>SF7</strong>. Coding rate is gegaan van CR8 naar CR5. Frequentie en bandbreedte zijn gelijk gebleven (869.618 MHz, 62.5 kHz). Het netto effect: ~3× meer kanaalcapaciteit, vergelijkbare gevoeligheid (–3 dB).</p></details>
             <details class="faq"><summary>Moet ik zelf iets doen als gebruiker?</summary><p>Ja. Update je companion-firmware naar v1.15+, zet de <code>Netherlands</code> preset, voeg regio-scopes toe, en pas op switchdag de nieuwe radio-instellingen toe. Volledige stappen op <a href="https://meshwiki.nl/wiki/The_switch" target="_blank" rel="noopener">meshwiki.nl/The_switch</a>. Doe je niets, dan word je tijdelijk geïsoleerd van de rest van het netwerk.</p></details>
             <details class="faq"><summary>Wat als mijn companion app op SF8 blijft?</summary><p>Dan kun je niet meer met SF7-nodes praten — verschillende spreading factors zijn niet compatibel. Je hoort wat van anderen, maar niet van mensen die al overgeschakeld zijn. Daarom is de coördinatie belangrijk.</p></details>
             <details class="faq"><summary>En 13 juni — strict region forwarding?</summary><p>Vanaf die datum verwerpt deze repeater (en de meeste andere) packets <em>zonder</em> regio-scope. Heb je je companion app correct geconfigureerd vóór die datum, dan merk je niets. Heb je geen scopes ingesteld, dan komen je berichten niet meer door.</p></details>
-            <details class="faq"><summary>Doet deze repeater al mee aan The Switch?</summary><p>Ja, op switchdag schakelt deze automatisch over. Hij draait al firmware v1.15, heeft de regio-scopes geconfigureerd, en advert interval staat op de minimale 50 uur. Strict region forwarding wordt op 13 juni geactiveerd.</p></details>
+            <details class="faq"><summary>Doet deze repeater mee aan The Switch?</summary><p>Ja, deze repeater is op 9 mei mee overgeschakeld. Hij draait firmware v1.15, heeft de regio-scopes geconfigureerd en het advert interval staat op 50 uur. Strict region forwarding (fase 2) volgt op 13 juni.</p></details>
           </div>
           <div>
             <h3 class="faq-col-title micro" style="color:var(--ink-mute)">▽ ALGEMEEN</h3>
@@ -1930,6 +1930,7 @@
           <h5>Tools</h5>
           <a href="https://cornmeister.nl" target="_blank">cornmeister.nl</a>
           <a href="https://analyzer.letsmesh.net/" target="_blank">analyzer.letsmesh.net</a>
+          <a href="https://analyser.meshwiki.nl" target="_blank">analyser.meshwiki.nl</a>
           <a href="https://settings.woodwar.com/nl/" target="_blank">settings.woodwar.com</a>
           <a href="https://mc-radar.woodwar.com/mesh-health" target="_blank">mesh-health monitor</a>
           <a href="https://www.mesh-up.nl/tools/kaart-van-regiocodes/" target="_blank">mesh-up regiocodes</a>
