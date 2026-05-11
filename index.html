@@ -14,7 +14,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
 
   <style>
     /* =========================================================
@@ -1157,8 +1158,8 @@
           </div>
           <div class="switch-banner-counters">
             <div class="counter">
-              <div class="counter-num" id="cd-switch-days">--</div>
-              <div class="counter-lbl">dagen tot switch</div>
+              <div class="counter-num">✓</div>
+              <div class="counter-lbl">switch live</div>
             </div>
             <div class="counter">
               <div class="counter-num" id="cd-strict-days">--</div>
@@ -1591,8 +1592,8 @@
             <div class="phase-card-meta">
               <span class="phase-tag">FASE 1 · 9 MEI 2026</span>
               <div class="phase-countdown">
-                <span class="counter-num" id="cd-switch-days-2">--</span>
-                <span class="counter-lbl">dagen</span>
+                <span class="counter-num">✓</span>
+                <span class="counter-lbl">switch live</span>
               </div>
             </div>
             <h3 class="phase-card-title">Radio omgeschakeld — SF7</h3>
@@ -1885,7 +1886,7 @@
             <details class="faq"><summary>Wat doet de observer hier eigenlijk?</summary><p>De observer (Heltec V4.3) zendt zelf niets — hij luistert passief mee op het mesh en publiceert metadata (welke packets, RSSI, paden) via MQTT naar Cornmeister. Zo is jouw mesh-activiteit publiek inzichtelijk zonder dat je het mesh extra belast.</p></details>
             <details class="faq"><summary>Wat als de stroom uitvalt?</summary><p>De repeater niet — die is solar-powered met 4× 18650 cellen, reserve van 5–7 dagen zonder zon. De observer zit op het stopcontact: die valt wél uit, maar dat raakt alleen de monitoring naar Cornmeister, niet het mesh-verkeer zelf.</p></details>
             <details class="faq"><summary>Hoe word ik onderdeel van de NL community?</summary><p>Telegram-groep <em>@meshcorenet</em> voor de Nederlandse community. Zet je node op de community-kaart via meshnet.nl. Voor technische diepte: de internationale Discord van MeshCore.</p></details>
-            <details class="faq"><summary>Kan ik deze pagina forken?</summary><p>Ja — een single-file HTML, alle config in één <code>window.MESH_CONFIG</code> object bovenaan het script. Pas naam, locatie en pubkeys aan en je hebt jouw eigen repeater-pagina. 100% statisch, geen backend.</p></details>
+            <details class="faq"><summary>Kan ik deze pagina forken?</summary><p>Ja — een single-file HTML. Zoek op je node-naam en pubkey en vervang ze; pas de twee datums bovenaan het script aan voor je eigen community-planning. 100% statisch, geen backend.</p></details>
           </div>
         </div>
       </div>
@@ -1949,8 +1950,7 @@
       </div>
 
       <div class="footer-bottom">
-        <span>© <span id="footer-year">2026</span> · <span id="footer-obsname">NL-KRT-OBS01</span> · operator <span class="mono">NL-KRT-SVN-01</span> · No rights reserved · MIT-style</span>
-        <span id="footer-clock">--:--:-- · AMS</span>
+        <span>© 2026 · NL-KRT-OBS01 · operator <span class="mono">NL-KRT-SVN-01</span> · No rights reserved · MIT-style</span>
       </div>
     </div>
   </footer>
@@ -1959,134 +1959,34 @@
        SCRIPT
        ================================================= -->
   <script>
-    /* =========================================================
-       CONFIG — pas hier je eigen waardes aan
-       ========================================================= */
-    window.MESH_CONFIG = {
-      // Repeater (P1-Pro) — doet het werk
-      nodeName:        'NL-UTG-KRT-REP01',
-      pubkeyRepeater:  '89115054326394FC1A0BB981B96688C5411AE9E30885DE5424536828A7E3632C',
-      cornmeisterRep:  'https://cornmeister.nl/#/nodes/89115054326394fc1a0bb981b96688c5411ae9e30885de5424536828a7e3632c',
-
-      // Observer (Heltec V4.3 OLED) — luistert mee, publiceert via MQTT
-      observerName:    'NL-KRT-OBS01',
-      pubkeyObserver:  '63F3CBC39A83C96C4CF25C3D6EFE15AA0FC22876E63CDED7ED9E2DF83515FA1C',
-      cornmeisterObs:  'https://cornmeister.nl/#/observers/63F3CBC39A83C96C4CF25C3D6EFE15AA0FC22876E63CDED7ED9E2DF83515FA1C',
-
-      // Operator
-      operator:        'NL-KRT-SVN-01',
-
-      // Site
-      location:        'Noord-Holland · NL · ~Uitgeest',
-      geo:             '52.51°N, 4.71°E · ±2 km',
-      altitudeText:    '5 m · dakmontage',
-      sinceISO:        '2026-04-14T08:00:00Z',
-
-      // Switch dates (NL community)
-      switchDate:      '2026-05-09T00:00:00+02:00',
-      strictDate:      '2026-06-13T00:00:00+02:00',
-    };
-
-    /* =========================================================
-       UTIL
-       ========================================================= */
-    const $ = id => document.getElementById(id);
-
-    function shortKey(hex, head = 8, tail = 8) {
-      if (!hex) return '';
-      return hex.slice(0, head) + '…' + hex.slice(-tail);
-    }
+    const STRICT_DATE = '2026-06-13T00:00:00+02:00';
 
     function daysUntil(iso) {
-      const target = new Date(iso).getTime();
-      const now = Date.now();
-      const ms = target - now;
-      if (ms <= 0) return 0;
-      return Math.ceil(ms / 86400000);
+      const ms = new Date(iso).getTime() - Date.now();
+      return ms <= 0 ? 0 : Math.ceil(ms / 86400000);
     }
 
-    /* =========================================================
-       HYDRATE — fill in templated values from CONFIG
-       ========================================================= */
-    function hydrate() {
-      const c = window.MESH_CONFIG;
-
-      // Brand & hero name
-      const brandEl = $('brand-name');
-      if (brandEl) brandEl.textContent = c.nodeName;
-      const heroEl = $('hero-name');
-      if (heroEl) heroEl.textContent = c.nodeName;
-
-      // Hero meta
-      const locEl = $('hero-loc'); if (locEl) locEl.textContent = c.location;
-      const geoEl = $('hero-geo'); if (geoEl) geoEl.textContent = c.geo;
-      const altEl = $('hero-alt'); if (altEl) altEl.textContent = c.altitudeText;
-      const sinceEl = $('hero-since');
-      if (sinceEl) sinceEl.textContent = c.sinceISO.slice(0, 10);
-
-      // Footer pubkey (repeater) + operator
-      const fpkEl = $('footer-pubkey-repeater');
-      if (fpkEl) fpkEl.textContent = shortKey(c.pubkeyRepeater);
-      const fopkEl = $('footer-pubkey-observer');
-      if (fopkEl) fopkEl.textContent = shortKey(c.pubkeyObserver);
-      const fopEl = $('footer-operator');
-      if (fopEl) fopEl.textContent = c.operator;
-      const fnodeEl = $('footer-nodename');
-      if (fnodeEl) fnodeEl.textContent = c.nodeName;
-      const fobsEl = $('footer-obsname');
-      if (fobsEl) fobsEl.textContent = c.observerName;
-
-      // Footer year + UTC clock
-      const yearEl = $('footer-year');
-      if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-      const clockFmt = new Intl.DateTimeFormat('nl-NL', {
-        timeZone: 'Europe/Amsterdam',
-        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
-      });
-      const tickClock = () => {
-        const el = $('footer-clock');
-        if (el) el.textContent = clockFmt.format(new Date()) + ' · AMS';
+    document.addEventListener('DOMContentLoaded', () => {
+      const els = [
+        document.getElementById('cd-strict-days'),
+        document.getElementById('cd-strict-days-2'),
+      ];
+      const tick = () => {
+        const days = daysUntil(STRICT_DATE);
+        els.forEach(el => {
+          if (!el) return;
+          if (days === 0) {
+            el.textContent = '✓';
+            const lbl = el.parentElement?.querySelector('.counter-lbl');
+            if (lbl) lbl.textContent = 'strict live';
+          } else {
+            el.textContent = days;
+          }
+        });
       };
-      tickClock();
-      setInterval(tickClock, 1000);
-
-      // Switch countdowns
-      const updCountdowns = () => {
-        const sw = daysUntil(c.switchDate);
-        const st = daysUntil(c.strictDate);
-        const sw1 = $('cd-switch-days'); if (sw1) sw1.textContent = sw;
-        const sw2 = $('cd-switch-days-2'); if (sw2) sw2.textContent = sw;
-        const st1 = $('cd-strict-days'); if (st1) st1.textContent = st;
-        const st2 = $('cd-strict-days-2'); if (st2) st2.textContent = st;
-
-        // After switch, swap the label
-        if (sw === 0) {
-          [sw1, sw2].forEach(el => {
-            if (el) {
-              el.textContent = '✓';
-              const lbl = el.parentElement?.querySelector('.counter-lbl');
-              if (lbl) lbl.textContent = 'switch live';
-            }
-          });
-        }
-        if (st === 0) {
-          [st1, st2].forEach(el => {
-            if (el) {
-              el.textContent = '✓';
-              const lbl = el.parentElement?.querySelector('.counter-lbl');
-              if (lbl) lbl.textContent = 'strict live';
-            }
-          });
-        }
-      };
-      updCountdowns();
-      setInterval(updCountdowns, 60_000);
-    }
-
-    /* =========================================================
-       BOOT
-       ========================================================= */
-    document.addEventListener('DOMContentLoaded', hydrate);
+      tick();
+      setInterval(tick, 60_000);
+    });
   </script>
 </body>
 </html>

@@ -16,18 +16,17 @@ There are no npm scripts, Makefile targets, linters, or test suites. This is a d
 
 ## Architecture
 
-Everything lives in `index.html` (~2,100 lines):
+Everything lives in `index.html` (~2,050 lines):
 
-- **`window.MESH_CONFIG`** (near the bottom) — single source of truth for all site content: node names, public keys, Cornmeister URLs, operator info, coordinates, and the two critical community dates (`switchDate`, `strictDate`).
-- **`hydrate()`** — runs on `DOMContentLoaded`, walks the DOM and fills `data-key` placeholders from `MESH_CONFIG`.
+- **`SWITCH_DATE` / `STRICT_DATE`** (near the bottom, top of the `<script>` block) — the two community transition dates. Edit these when deadlines change.
 - **`$()`** — shorthand for `getElementById()`.
-- **Countdown timers** — `daysUntil()` computes days remaining; displays `✓` once the target date has passed. Timers refresh every 60 seconds; the UTC clock refreshes every 1 second.
+- **Countdown timers** — `daysUntil()` computes days remaining; displays `✓` once the target date has passed. Timers refresh every 60 seconds; the Amsterdam clock refreshes every 1 second.
 
 All CSS is embedded in a `<style>` block. Design tokens use CSS custom properties (`--bg-0`, `--border`, `--ink`, `--accent`, `--rad`, `--rad-lg`). Color palette: dark navy `#0d1117` + MeshCore green `#22c55e`. Fonts: Inter + JetBrains Mono (Google Fonts).
 
 ## Key Conventions
 
-- **Config-first**: change content by editing `window.MESH_CONFIG`, not by touching HTML directly.
+- **Edit HTML directly**: node names, pubkeys, Cornmeister URLs, operator info, coordinates — all live as plain text in the HTML. Find and replace to update.
 - **Zero dependencies**: no npm, no bundler — keep it that way.
 - **Single file**: the whole site is one file so it can be forked cleanly for other node operators.
 - **Dutch UI, English technical values**: page language is `nl`, but node names, keys, and technical strings stay in English.
