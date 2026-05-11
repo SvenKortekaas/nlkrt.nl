@@ -1189,7 +1189,7 @@
               <span class="l2">een solar MeshCore-repeater op een dak in Uitgeest</span>
             </h1>
             <p class="lede">
-              Off-grid LoRa-relay op zonne-energie. Geen abonnement, geen cloud, geen single point of failure —
+              MeshCore-repeater op zonne-energie. Geen abonnement, geen cloud, geen single point of failure —
               alleen een paar honderd milliwatt en een dakzicht op Noord-Holland. Doet stilletjes z'n werk
               voor elk MeshCore-pakket dat hier voorbijkomt.
             </p>
@@ -1392,22 +1392,22 @@
 
             <div class="pubkey-block" style="margin-top:1.5rem">
               <div class="pubkey-head">
+                <h4 class="upper micro" style="color:var(--amber)">⛭ REPEATER · NL-UTG-KRT-REP02</h4>
+                <span style="font-size:0.75rem;color:var(--ink-mute);font-family:var(--mono)">binnenkort</span>
+              </div>
+              <div class="pubkey" style="opacity:0.4;color:var(--ink-mute);">
+                pubkey volgt — node nog niet operationeel
+              </div>
+            </div>
+
+            <div class="pubkey-block" style="margin-top:1.5rem">
+              <div class="pubkey-head">
                 <h4 class="upper micro" style="color:#a78bfa">⛭ OBSERVER · NL-KRT-OBS01</h4>
                 <a href="https://cornmeister.nl/#/observers/63F3CBC39A83C96C4CF25C3D6EFE15AA0FC22876E63CDED7ED9E2DF83515FA1C" target="_blank" rel="noopener" class="pubkey-link">on Cornmeister ↗</a>
               </div>
               <div class="pubkey">
                 63F3CBC39A83C96C4CF25C3D6EFE15AA<br>
                 0FC22876E63CDED7ED9E2DF83515FA1C
-              </div>
-            </div>
-
-            <div class="pubkey-block" style="margin-top:1.5rem">
-              <div class="pubkey-head">
-                <h4 class="upper micro" style="color:var(--amber)">⛭ REPEATER · NL-UTG-KRT-REP02</h4>
-                <span style="font-size:0.75rem;color:var(--ink-mute);font-family:var(--mono)">binnenkort</span>
-              </div>
-              <div class="pubkey" style="opacity:0.4;color:var(--ink-mute);">
-                pubkey volgt — node nog niet operationeel
               </div>
             </div>
 
@@ -1523,6 +1523,35 @@
           </div>
         </div>
 
+        <!-- REP02 (coming soon) -->
+        <div class="hw-divider"></div>
+        <div class="hw-grid">
+          <div class="hw-illu" style="display:flex;align-items:center;justify-content:center;min-height:200px;">
+            <svg viewBox="0 0 340 340" style="width:100%;max-width:280px;opacity:0.55;">
+              <rect x="20" y="20" width="300" height="300" fill="none" stroke="#3d4654" stroke-width="1.5" stroke-dasharray="6 4" rx="8"/>
+              <text x="170" y="148" fill="#3d4654" font-family="JetBrains Mono" font-size="48" text-anchor="middle" font-weight="700">?</text>
+              <text x="170" y="182" fill="#4a5260" font-family="JetBrains Mono" font-size="9" text-anchor="middle" letter-spacing="0.18em">NL-UTG-KRT-REP02</text>
+              <text x="170" y="200" fill="#4a5260" font-family="JetBrains Mono" font-size="8" text-anchor="middle" letter-spacing="0.1em">locatie volgt</text>
+            </svg>
+          </div>
+          <div class="hw-specs">
+            <div class="hw-role-label">
+              <span class="role-badge" style="opacity:0.6">REPEATER</span>
+              <span class="hw-role-name" style="color:var(--ink-dim)">NL-UTG-KRT-REP02 <span style="font-size:0.75rem;color:var(--ink-mute);font-family:var(--mono);font-weight:400;">· binnenkort</span></span>
+            </div>
+            <h3 style="color:var(--ink-dim)">Identieke hardware als REP01</h3>
+            <ul class="spec-list" style="opacity:0.7;">
+              <li><span class="k">Hardware</span><span class="v">SenseCAP Solar Node P1-Pro</span></li>
+              <li><span class="k">MCU</span><span class="v">Nordic nRF52840 · SX1262</span></li>
+              <li><span class="k">Frequency</span><span class="v">869.618 MHz · SF7 / CR5</span></li>
+              <li><span class="k">Solar panel</span><span class="v">5 W geïntegreerd</span></li>
+              <li><span class="k">Battery</span><span class="v">4× 18650 · 3350 mAh</span></li>
+              <li><span class="k">Antenna</span><span class="v">LongAP 3 dBi · 868 MHz</span></li>
+              <li><span class="k">Home scope</span><span class="v">nl-nh-utg</span></li>
+              <li><span class="k">Pubkey</span><span class="v" style="color:var(--ink-mute)">volgt zodra node operationeel is</span></li>
+            </ul>
+          </div>
+        </div>
         <!-- Observer (Heltec V4.3) -->
         <div class="hw-divider"></div>
         <div class="hw-grid hw-grid--observer">
@@ -1541,7 +1570,7 @@
               <li><span class="k">USB</span><span class="v">USB-C · CP2102 UART bridge</span></li>
               <li><span class="k">Power</span><span class="v">via USB · li-po backup connector aanwezig</span></li>
               <li><span class="k">Rol</span><span class="v">Room server / observer (geen relay)</span></li>
-              <li><span class="k">Uplink</span><span class="v">WiFi → MQTT → cornmeister.nl</span></li>
+              <li><span class="k">Uplink</span><span class="v">WiFi → MQTT (dutchmeshcore.nl) → Cornmeister · mc-radar</span></li>
               <li><span class="k">Antenna</span><span class="v">stock 2 dBi rubber rod, SMA</span></li>
               <li><span class="k">Mounting</span><span class="v">indoor, op bureau bij router</span></li>
             </ul>
@@ -1610,35 +1639,6 @@
             </svg>
           </div>
         </div>
-        <!-- REP02 (coming soon) -->
-        <div class="hw-divider"></div>
-        <div class="hw-grid">
-          <div class="hw-illu" style="display:flex;align-items:center;justify-content:center;min-height:200px;">
-            <svg viewBox="0 0 340 340" style="width:100%;max-width:280px;opacity:0.55;">
-              <rect x="20" y="20" width="300" height="300" fill="none" stroke="#3d4654" stroke-width="1.5" stroke-dasharray="6 4" rx="8"/>
-              <text x="170" y="148" fill="#3d4654" font-family="JetBrains Mono" font-size="48" text-anchor="middle" font-weight="700">?</text>
-              <text x="170" y="182" fill="#4a5260" font-family="JetBrains Mono" font-size="9" text-anchor="middle" letter-spacing="0.18em">NL-UTG-KRT-REP02</text>
-              <text x="170" y="200" fill="#4a5260" font-family="JetBrains Mono" font-size="8" text-anchor="middle" letter-spacing="0.1em">locatie volgt</text>
-            </svg>
-          </div>
-          <div class="hw-specs">
-            <div class="hw-role-label">
-              <span class="role-badge" style="opacity:0.6">REPEATER</span>
-              <span class="hw-role-name" style="color:var(--ink-dim)">NL-UTG-KRT-REP02 <span style="font-size:0.75rem;color:var(--ink-mute);font-family:var(--mono);font-weight:400;">· binnenkort</span></span>
-            </div>
-            <h3 style="color:var(--ink-dim)">Identieke hardware als REP01</h3>
-            <ul class="spec-list" style="opacity:0.7;">
-              <li><span class="k">Hardware</span><span class="v">SenseCAP Solar Node P1-Pro</span></li>
-              <li><span class="k">MCU</span><span class="v">Nordic nRF52840 · SX1262</span></li>
-              <li><span class="k">Frequency</span><span class="v">869.618 MHz · SF7 / CR5</span></li>
-              <li><span class="k">Solar panel</span><span class="v">5 W geïntegreerd</span></li>
-              <li><span class="k">Battery</span><span class="v">4× 18650 · 3350 mAh</span></li>
-              <li><span class="k">Antenna</span><span class="v">LongAP 3 dBi · 868 MHz</span></li>
-              <li><span class="k">Home scope</span><span class="v">nl-nh-utg</span></li>
-              <li><span class="k">Pubkey</span><span class="v" style="color:var(--ink-mute)">volgt zodra node operationeel is</span></li>
-            </ul>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -1650,7 +1650,7 @@
         <div class="section-head">
           <span class="section-num">03 / LIVE</span>
           <h2>Live <span class="display-italic">monitoring</span></h2>
-          <p class="lede">Geen eigen telemetrie-pijp meer — alle live data van deze repeater (en de bijbehorende observer) wordt naar <strong>Cornmeister.nl</strong> gepubliceerd. Daar zie je packets, traces, channels, neighbours en uptime in real-time.</p>
+          <p class="lede">Geen eigen telemetrie-pijp meer — alle live data van deze repeater (en de bijbehorende observer) wordt via het Dutch MeshCore MQTT-cluster (<strong>dutchmeshcore.nl</strong>) gepubliceerd naar <strong>Cornmeister.nl</strong> en <strong>mc-radar.woodwar.com</strong>. Daar zie je packets, traces, channels, neighbours en uptime in real-time.</p>
         </div>
 
         <div class="live-grid">
@@ -1720,8 +1720,8 @@
             <div class="live-arch-step">
               <div class="step-icon">☁️</div>
               <div class="step-text">
-                <strong>Cornmeister</strong>
-                <span>MQTT-feed met packets, traces &amp; analytics</span>
+                <strong>MQTT cluster</strong>
+                <span>dutchmeshcore.nl → Cornmeister &amp; mc-radar</span>
               </div>
             </div>
           </div>
@@ -2054,9 +2054,9 @@
           <div class="step"><div class="step-num"></div><div class="step-body"><h4>Firmware v1.15+</h4><p>Open <code>flasher.meshcore.dev</code> in <strong>Chrome of Edge</strong> (Web Serial werkt niet in Firefox/Safari). Sluit aan via USB-C, kies je device, kies <em>Companion firmware</em> versie <strong>1.15 of nieuwer</strong>. v1.15 is verplicht voor The Switch (region scoping &amp; strict forwarding).</p></div></div>
           <div class="step"><div class="step-num"></div><div class="step-body"><h4>App installeren</h4><p>De officiële <strong>MeshCore</strong> app (iOS / Android / web). Niet de Meshtastic-app, dat is een ander protocol — verwarring nummer één. Pair je device via Bluetooth of USB.</p></div></div>
           <div class="step"><div class="step-num"></div><div class="step-body"><h4>Radio-instellingen</h4><p>In de app: <em>Settings → Radio → Choose Preset → <code>EU/UK (NARROW)</code></em>. Pas daarna handmatig aan: <strong>SF → 7</strong> en <strong>CR → 5</strong>. De overige parameters blijven goed: <strong>869.618 MHz / 62.5 kHz</strong>. Reboot je device om de instellingen te activeren.</p></div></div>
-          <div class="step"><div class="step-num"></div><div class="step-body"><h4>Regio scope</h4><p>Voeg in <em>Manage Regions</em> minimaal <code>eu</code>, <code>nl</code> en je provinciecode (bv. <code>nl-nh</code> voor Noord-Holland) toe en zet ze op <em>Allow Flood</em>. Optioneel <code>bx</code> voor Benelux. In <em>Experimental Settings</em> zet je <em>Default Region</em> op <code>nl</code>. De configurator in sectie 07 doet dit automatisch.</p></div></div>
+          <div class="step"><div class="step-num"></div><div class="step-body"><h4>Regio scope</h4><p>Voeg in <em>Manage Regions</em> minimaal <code>eu</code>, <code>europe</code>, <code>nl</code> en je provinciecode (bv. <code>nl-nh</code> voor Noord-Holland) toe en zet ze op <em>Allow Flood</em>. Optioneel <code>bx</code> voor Benelux. In <em>Experimental Settings</em> zet je <em>Default Region</em> op <code>nl</code>. De configurator in sectie 07 doet dit automatisch.</p></div></div>
           <div class="step"><div class="step-num"></div><div class="step-body"><h4>Multi-byte path</h4><p>In <em>Experimental Settings</em>: zet <em>Default Path Hash Size</em> op <strong>2-byte</strong>. Hierdoor krijgen je berichten een 2-byte path hash mee, wat het netwerk nodig heeft voor multi-byte path tracing.</p></div></div>
-          <div class="step"><div class="step-num"></div><div class="step-body"><h4>Eerste advert</h4><p>Druk in de app op <em>Advert</em> (flood). Binnen 1–3 minuten zie je deze repeater en andere buren in je contactenlijst verschijnen. Welcome to the mesh.</p></div></div>
+          <div class="step"><div class="step-num"></div><div class="step-body"><h4>Eerste advert</h4><p>Druk in de app op <em>Advert</em> (flood). Binnen 1–3 minuten zie je andere devices in de buurt in je contactenlijst verschijnen. Welcome to the mesh.</p></div></div>
         </div>
       </div>
     </section>
@@ -2171,8 +2171,9 @@
             ⛭ REP01: <span id="footer-pubkey-repeater">8911505…7e3632c</span><br>
             ⛭ REP02: <span style="color:var(--ink-faint)">binnenkort</span><br>
             ⛭ observer: <span id="footer-pubkey-observer">63F3CBC…3515FA1C</span><br>
-            ⛭ operator: <span id="footer-operator">NL-KRT-SVN-01</span><br>
-            ⛭ hardware: <a href="https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-Pro-for-Meshtastic-LoRa-p-6412.html" target="_blank" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">SenseCAP P1-Pro</a>
+            ⛭ operator: <span id="footer-operator">NL-KRT-SVN-01 · NL-KRT-SVN-02</span><br>
+            ⛭ hardware: <a href="https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-Pro-for-Meshtastic-LoRa-p-6412.html" target="_blank" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">SenseCAP P1-Pro</a><br>
+            ⛭ broncode: <a href="https://github.com/SvenKortekaas/nlkrt.nl" target="_blank" rel="noopener" style="color:var(--amber);text-decoration:none;border-bottom:1px dashed var(--amber);">github.com/SvenKortekaas/nlkrt.nl</a>
           </p>
         </div>
         <div class="footer-col">
@@ -2211,7 +2212,7 @@
       </div>
 
       <div class="footer-bottom">
-        <span>© 2026 · NL-KRT-OBS01 · operator <span class="mono">NL-KRT-SVN-01</span> · No rights reserved · MIT-style</span>
+        <span>© 2026 · NL-KRT-OBS01 · operator <span class="mono">NL-KRT-SVN-01 · NL-KRT-SVN-02</span> · No rights reserved · MIT-style</span>
       </div>
     </div>
   </footer>
