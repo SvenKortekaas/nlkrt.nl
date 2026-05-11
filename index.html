@@ -17,6 +17,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
 
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
   <style>
     /* =========================================================
        DESIGN TOKENS · MESHCORE.IO INSPIRED DARK THEME
@@ -935,6 +937,116 @@
     details.faq[open] summary::after { transform: rotate(45deg); }
     details.faq[open] summary { color: var(--amber); }
     details.faq p { margin-top: 0.875rem; color: var(--ink-dim); font-size: 0.9375rem; line-height: 1.7; }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+    .contact-topics {
+      list-style: none;
+      margin-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .contact-topics li {
+      font-size: 0.875rem;
+      color: var(--ink-mute);
+      padding-left: 1.25rem;
+      position: relative;
+    }
+    .contact-topics li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--amber);
+      font-family: var(--mono);
+    }
+    .contact-form-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--rad-lg);
+      padding: 2rem;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+      margin-bottom: 1rem;
+    }
+    .form-field label {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .form-field input,
+    .form-field textarea {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--rad);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 0.9375rem;
+      padding: 0.625rem 0.875rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: var(--ink-faint); }
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: var(--amber);
+      box-shadow: 0 0 0 3px var(--amber-glow);
+    }
+    .form-field textarea { resize: vertical; min-height: 130px; }
+    .contact-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.25rem;
+      flex-wrap: wrap;
+    }
+    #contact-status {
+      font-size: 0.875rem;
+      flex: 1;
+      min-width: 0;
+    }
+    .contact-ok { color: var(--amber); }
+    .contact-err { color: var(--warn); }
+    .contact-submit-btn {
+      background: var(--amber);
+      color: var(--bg-0);
+      border: none;
+      border-radius: var(--rad);
+      font-family: var(--sans);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      padding: 0.625rem 1.5rem;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .contact-submit-btn:hover:not(:disabled) { background: var(--amber-hi); }
+    .contact-submit-btn:disabled { opacity: 0.55; cursor: not-allowed; }
 
     /* FOOTER */
     footer {
@@ -1892,6 +2004,61 @@
       </div>
     </section>
 
+    <!-- =================================================
+         11 · CONTACT
+         ================================================= -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-num">11 / CONTACT</span>
+          <h2>Neem contact op</h2>
+          <p class="lede">Vragen, meldingen of suggesties? Laat het weten.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div>
+            <p style="color:var(--ink-dim);font-size:0.9375rem;line-height:1.8;">
+              Heb je een vraag over deze repeater of observer, of werkt er iets niet naar verwachting?
+              Wil je je eigen node opzetten in de regio, snap je een instelling niet, of heb je een
+              suggestie voor deze pagina? Ook voor algemene vragen over MeshCore en het Nederlandse
+              mesh-netwerk ben je welkom. Ik hoor het graag.
+            </p>
+            <ul class="contact-topics">
+              <li>Repeater of observer werkt niet naar verwachting</li>
+              <li>Instellingen, regio-scoping of firmware vragen</li>
+              <li>Eigen node opzetten in de regio</li>
+              <li>Suggesties voor verbetering van deze pagina</li>
+              <li>Algemene MeshCore of LoRa-vragen</li>
+            </ul>
+          </div>
+
+          <div class="contact-form-wrap">
+            <form id="contact-form" novalidate>
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="cf-name">Naam / Callsign</label>
+                  <input type="text" id="cf-name" name="name" placeholder="NL-KRT-??-01" required />
+                </div>
+                <div class="form-field">
+                  <label for="cf-email">E-mailadres</label>
+                  <input type="email" id="cf-email" name="email" placeholder="jou@example.com" required />
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="cf-message">Bericht</label>
+                <textarea id="cf-message" name="message" rows="5" placeholder="Stel je vraag of laat je bericht achter…" required></textarea>
+              </div>
+              <div class="cf-turnstile" data-sitekey="0x4AAAAAADNLUyZbilJ-uyjb" data-theme="dark" style="margin-top:0.5rem;"></div>
+              <div class="contact-actions">
+                <span id="contact-status"></span>
+                <button type="submit" id="contact-submit" class="contact-submit-btn">Verstuur →</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- =================================================
@@ -1986,6 +2153,50 @@
       tick();
       setInterval(tick, 60_000);
     });
+
+    // Contact form
+    (function () {
+      const form   = document.getElementById('contact-form');
+      const status = document.getElementById('contact-status');
+      const btn    = document.getElementById('contact-submit');
+      if (!form) return;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        btn.disabled    = true;
+        btn.textContent = 'Bezig…';
+        status.textContent = '';
+        status.className   = '';
+
+        try {
+          const res  = await fetch('https://formspree.io/f/xojrywqb', {
+            method:  'POST',
+            headers: { Accept: 'application/json' },
+            body:    new FormData(form),
+          });
+          const data = await res.json();
+
+          if (res.ok) {
+            form.reset();
+            if (window.turnstile) turnstile.reset();
+            status.textContent = '✓ Bericht verzonden! Ik neem zo snel mogelijk contact met je op.';
+            status.className   = 'contact-ok';
+            btn.textContent    = 'Verstuurd ✓';
+          } else {
+            const msg = data?.errors?.map(err => err.message).join(' ') || 'Er is iets misgegaan. Probeer het opnieuw.';
+            status.textContent = msg;
+            status.className   = 'contact-err';
+            btn.disabled       = false;
+            btn.textContent    = 'Verstuur →';
+          }
+        } catch {
+          status.textContent = 'Verbindingsfout. Controleer je internetverbinding en probeer opnieuw.';
+          status.className   = 'contact-err';
+          btn.disabled       = false;
+          btn.textContent    = 'Verstuur →';
+        }
+      });
+    }());
   </script>
 </body>
 </html>
