@@ -1349,7 +1349,7 @@
         <div class="section-head">
           <span class="section-num">01 / IDENTITY</span>
           <h2>Knooppunt­paspoort</h2>
-          <p class="lede">De setup bestaat uit twee nodes — een echte repeater op het dak die het werk doet, en een passieve observer indoor die metadata naar Cornmeister publiceert. Hieronder de operationele parameters en de public keys van beide.</p>
+          <p class="lede">De setup bestaat uit twee nodes — een echte repeater op het dak die het werk doet, en een passieve observer indoor die metadata naar het Dutch MeshCore MQTT-cluster publiceert. Hieronder de operationele parameters en de public keys van beide.</p>
         </div>
 
         <div class="id-grid">
@@ -1442,7 +1442,7 @@
         <div class="section-head">
           <span class="section-num">02 / HARDWARE</span>
           <h2>Twee nodes, <span class="display-italic">twee rollen</span></h2>
-          <p class="lede">De repeater is een <em>SenseCAP P1-Pro</em> op een dak — autonoom, op zonne-energie. De observer is een <em>Heltec V4.3 OLED</em> binnen die als room-server het mesh meeluistert en metadata via MQTT naar Cornmeister publiceert.</p>
+          <p class="lede">De repeater is een <em>SenseCAP P1-Pro</em> op een dak — autonoom, op zonne-energie. De observer is een <em>Heltec V4.3 OLED</em> binnen die als room-server het mesh meeluistert en metadata via het Dutch MeshCore MQTT-cluster publiceert.</p>
         </div>
 
         <!-- Repeater (P1-Pro) -->
@@ -1686,7 +1686,7 @@
               <span class="live-card-arrow">↗</span>
             </div>
             <h3 class="live-card-name">NL-KRT-OBS01</h3>
-            <p class="live-card-desc">Heltec V4.3 OLED naast de repeater. Luistert mee op het mesh en publiceert metadata via MQTT naar Cornmeister.</p>
+            <p class="live-card-desc">Heltec V4.3 OLED naast de repeater. Luistert mee op het mesh en publiceert metadata via het Dutch MeshCore MQTT-cluster naar Cornmeister en mc-radar.</p>
             <div class="live-card-pubkey" title="public key">
               <span class="micro" style="color:var(--ink-mute)">PUBKEY</span>
               <code>63F3CBC3…83515FA1C</code>
@@ -1761,7 +1761,7 @@
             <span class="panel-corner bl"></span><span class="panel-corner br"></span>
             <h3>Live topologie</h3>
             <p style="color:var(--ink-dim);font-size:0.9375rem;line-height:1.7;margin-top:0.625rem;">
-              Wie hoor ik direct, en wie hoor ik via een hop? De observer publiceert deze data live naar Cornmeister. Daar zie je per pakket welke nodes het hebben gerelayd en wat de path-statistieken zijn.
+              Wie hoor ik direct, en wie hoor ik via een hop? De observer publiceert deze data live naar het Dutch MeshCore MQTT-cluster (dutchmeshcore.nl), van waaruit Cornmeister en mc-radar het oppikken. Daar zie je per pakket welke nodes het hebben gerelayd en wat de path-statistieken zijn.
             </p>
             <a href="https://cornmeister.nl/#/observers/63F3CBC39A83C96C4CF25C3D6EFE15AA0FC22876E63CDED7ED9E2DF83515FA1C" target="_blank" rel="noopener" class="cta secondary" style="margin-top:1rem;">
               Bekijk topologie op Cornmeister <span class="arrow">↗</span>
@@ -2089,8 +2089,8 @@
             <details class="faq"><summary>Kan iedereen mijn berichten lezen?</summary><p>Direct messages zijn AES-128 encrypted tussen jouw key en de bestemming. Repeaters relayen alleen de envelope. Public channels zijn wel publiek leesbaar — net als een radiokanaal.</p></details>
             <details class="faq"><summary>Kan ik berichten naar Meshtastic sturen?</summary><p>Nee. Het zijn verschillende protocollen op dezelfde hardware. Je kunt dezelfde radio re-flashen tussen Meshtastic en MeshCore, maar niet tegelijk gebruiken.</p></details>
             <details class="faq"><summary>Hoe ver gaat een bericht?</summary><p>Direct (1 hop): paar honderd meter in de stad, kilometers met dakantennes. Met multi-hops over de mesh: tientallen kilometers makkelijk haalbaar in goed gedekt gebied.</p></details>
-            <details class="faq"><summary>Wat doet de observer hier eigenlijk?</summary><p>De observer (Heltec V4.3) zendt zelf niets — hij luistert passief mee op het mesh en publiceert metadata (welke packets, RSSI, paden) via MQTT naar Cornmeister. Zo is jouw mesh-activiteit publiek inzichtelijk zonder dat je het mesh extra belast.</p></details>
-            <details class="faq"><summary>Wat als de stroom uitvalt?</summary><p>De repeater niet — die is solar-powered met 4× 18650 cellen, reserve van 5–7 dagen zonder zon. De observer zit op het stopcontact: die valt wél uit, maar dat raakt alleen de monitoring naar Cornmeister, niet het mesh-verkeer zelf.</p></details>
+            <details class="faq"><summary>Wat doet de observer hier eigenlijk?</summary><p>De observer (Heltec V4.3) zendt zelf niets — hij luistert passief mee op het mesh en publiceert metadata (welke packets, RSSI, paden) via MQTT naar het Dutch MeshCore MQTT-cluster (dutchmeshcore.nl). Van daaruit pikken Cornmeister en mc-radar de data op. Zo is jouw mesh-activiteit publiek inzichtelijk zonder dat je het mesh extra belast.</p></details>
+            <details class="faq"><summary>Wat als de stroom uitvalt?</summary><p>De repeater niet — die is solar-powered met 4× 18650 cellen, reserve van 5–7 dagen zonder zon. De observer zit op het stopcontact: die valt wél uit, maar dat raakt alleen de monitoring via het MQTT-cluster, niet het mesh-verkeer zelf.</p></details>
             <details class="faq"><summary>Hoe word ik onderdeel van de NL community?</summary><p>Telegram-groep <em>@meshcorenet</em> voor de Nederlandse community. Zet je node op de community-kaart via meshnet.nl. Voor technische diepte: de internationale Discord van MeshCore.</p></details>
             <details class="faq"><summary>Kan ik deze pagina forken?</summary><p>Ja — een single-file HTML. Zoek op je node-naam en pubkey en vervang ze; pas de twee datums bovenaan het script aan voor je eigen community-planning. 100% statisch, geen backend.</p></details>
           </div>
