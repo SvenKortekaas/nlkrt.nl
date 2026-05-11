@@ -1950,7 +1950,7 @@
 
       <div class="footer-bottom">
         <span>© <span id="footer-year">2026</span> · <span id="footer-obsname">NL-KRT-OBS01</span> · operator <span class="mono">NL-KRT-SVN-01</span> · No rights reserved · MIT-style</span>
-        <span id="footer-clock">--:--:-- · UTC</span>
+        <span id="footer-clock">--:--:-- · AMS</span>
       </div>
     </div>
   </footer>
@@ -2039,13 +2039,13 @@
       // Footer year + UTC clock
       const yearEl = $('footer-year');
       if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+      const clockFmt = new Intl.DateTimeFormat('nl-NL', {
+        timeZone: 'Europe/Amsterdam',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+      });
       const tickClock = () => {
-        const t = new Date();
-        const hh = String(t.getUTCHours()).padStart(2, '0');
-        const mm = String(t.getUTCMinutes()).padStart(2, '0');
-        const ss = String(t.getUTCSeconds()).padStart(2, '0');
         const el = $('footer-clock');
-        if (el) el.textContent = `${hh}:${mm}:${ss} · UTC`;
+        if (el) el.textContent = clockFmt.format(new Date()) + ' · AMS';
       };
       tickClock();
       setInterval(tickClock, 1000);
