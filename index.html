@@ -1957,7 +1957,7 @@
           <div class="step"><div class="step-num"></div><div class="step-body"><h4>Hardware kiezen</h4><p>Een betaalbare 868 MHz LoRa-companion. Populaire keuzes: <strong>Heltec V3</strong> (~€25), <strong>LilyGo T-Echo</strong> (e-ink, met GPS), of <strong>RAK Wisblock</strong> voor wie wil bouwen. Let op: 868 MHz variant, niet de US-versie van 915 MHz.</p></div></div>
           <div class="step"><div class="step-num"></div><div class="step-body"><h4>Firmware v1.15+</h4><p>Open <code>flasher.meshcore.dev</code> in <strong>Chrome of Edge</strong> (Web Serial werkt niet in Firefox/Safari). Sluit aan via USB-C, kies je device, kies <em>Companion firmware</em> versie <strong>1.15 of nieuwer</strong>. v1.15 is verplicht voor The Switch (region scoping &amp; strict forwarding).</p></div></div>
           <div class="step"><div class="step-num"></div><div class="step-body"><h4>App installeren</h4><p>De officiële <strong>MeshCore</strong> app (iOS / Android / web). Niet de Meshtastic-app, dat is een ander protocol — verwarring nummer één. Pair je device via Bluetooth of USB.</p></div></div>
-          <div class="step"><div class="step-num"></div><div class="step-body"><h4>Netherlands preset</h4><p>In de app: <em>Settings → Radio → Choose Preset → <code>Netherlands</code></em>. Dit zet alle parameters in één keer goed: <strong>SF7 / CR5 / 869.618 MHz / 62.5 kHz</strong>. Vóór 9 mei 2026 stond NL nog op SF8 — vanaf die datum is <code>Netherlands</code> de juiste keuze.</p></div></div>
+          <div class="step"><div class="step-num"></div><div class="step-body"><h4>Radio-instellingen</h4><p>In de app: <em>Settings → Radio → Choose Preset → <code>EU/UK (NARROW)</code></em>. Pas daarna handmatig aan: <strong>SF → 7</strong> en <strong>CR → 5</strong>. De overige parameters blijven goed: <strong>869.618 MHz / 62.5 kHz</strong>. Reboot je device om de instellingen te activeren.</p></div></div>
           <div class="step"><div class="step-num"></div><div class="step-body"><h4>Regio scope</h4><p>Voeg in <em>Manage Regions</em> minimaal <code>eu</code>, <code>nl</code> en je provinciecode (bv. <code>nl-nh</code> voor Noord-Holland) toe en zet ze op <em>Allow Flood</em>. Optioneel <code>bx</code> voor Benelux. In <em>Experimental Settings</em> zet je <em>Default Region</em> op <code>nl</code>. De configurator in sectie 07 doet dit automatisch.</p></div></div>
           <div class="step"><div class="step-num"></div><div class="step-body"><h4>Multi-byte path</h4><p>In <em>Experimental Settings</em>: zet <em>Default Path Hash Size</em> op <strong>2-byte</strong>. Hierdoor krijgen je berichten een 2-byte path hash mee, wat het netwerk nodig heeft voor multi-byte path tracing.</p></div></div>
           <div class="step"><div class="step-num"></div><div class="step-body"><h4>Eerste advert</h4><p>Druk in de app op <em>Advert</em> (flood). Binnen 1–3 minuten zie je deze repeater en andere buren in je contactenlijst verschijnen. Welcome to the mesh.</p></div></div>
@@ -2035,7 +2035,7 @@
               <div class="form-row">
                 <div class="form-field">
                   <label for="cf-name">Naam / Callsign</label>
-                  <input type="text" id="cf-name" name="name" placeholder="NL-KRT-??-01" required />
+                  <input type="text" id="cf-name" name="name" placeholder="Mesj Kor" required />
                 </div>
                 <div class="form-field">
                   <label for="cf-email">E-mailadres</label>
