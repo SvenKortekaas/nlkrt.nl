@@ -12,6 +12,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v5
 
+      - name: Minify HTML
+        run: npx --yes html-minifier-terser \
+          --collapse-whitespace \
+          --remove-comments \
+          --minify-css true \
+          --minify-js true \
+          index.html -o index.html
+
       - name: Inject CSP hashes into .htaccess
         run: |
           python3 - <<'EOF'
