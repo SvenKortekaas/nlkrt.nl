@@ -1130,6 +1130,11 @@
       margin-bottom: 0.75rem;
       letter-spacing: -0.02em;
     }
+    .footer-mark p { color: var(--ink-mute); font-size: 0.875rem; line-height: 1.7; }
+    .footer-mark .footer-meta {
+      margin-top: 1rem; font-family: var(--mono); font-size: 0.6875rem;
+      color: var(--ink-mute); letter-spacing: 0.1em; line-height: 1.9;
+    }
 
     .footer-bottom {
       border-top: 1px solid var(--border);
@@ -2166,11 +2171,11 @@
       <div class="footer-grid">
         <div class="footer-mark">
           <h4 id="footer-nodename">NL-UTG-KRT-REP01 <span style="font-size:0.75rem;font-family:var(--mono);font-weight:400;color:var(--ink-mute)">+ REP02 binnenkort</span></h4>
-          <p style="color:var(--ink-mute);font-size:0.875rem;line-height:1.7;">
+          <p>
             Solar-powered MeshCore repeaters op daken in Uitgeest, Noord-Holland.
             Onderdeel van het wereldwijde MeshCore-mesh — onafhankelijk van internet, zendmasten en abonnementen.
           </p>
-          <p style="margin-top:1rem;font-family:var(--mono);font-size:0.6875rem;color:var(--ink-mute);letter-spacing:0.1em;line-height:1.9;">
+          <p class="footer-meta">
             ⛭ REP01: <span id="footer-pubkey-repeater">8911505…7e3632c</span><br>
             ⛭ REP02: <span style="color:var(--ink-faint)">binnenkort</span><br>
             ⛭ observer: <span id="footer-pubkey-observer">63F3CBC…3515FA1C</span><br>
