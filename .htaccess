@@ -1,3 +1,10 @@
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript text/javascript application/json font/woff2 font/woff image/svg+xml
 </IfModule>
+
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), usb=()"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src https://challenges.cloudflare.com https://joehoehoepi.github.io; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; img-src 'self' data:; base-uri 'self'; object-src 'none'"
+</IfModule>
