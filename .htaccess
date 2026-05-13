@@ -6,5 +6,5 @@
     Header always set X-Frame-Options "SAMEORIGIN"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
     Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), usb=()"
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src https://challenges.cloudflare.com https://joehoehoepi.github.io; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; img-src 'self' data:; base-uri 'self'; object-src 'none'"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-%%SCRIPT_HASH%%' https://challenges.cloudflare.com; style-src 'self' 'sha256-%%STYLE_HASH%%' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src https://challenges.cloudflare.com https://joehoehoepi.github.io; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; img-src 'self' data:; base-uri 'self'; object-src 'none'"
 </IfModule>

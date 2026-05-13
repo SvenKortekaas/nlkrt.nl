@@ -14,7 +14,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
 
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -2221,6 +2221,8 @@
        SCRIPT
        ================================================= -->
   <script>
+    document.querySelector('link[media="print"]').addEventListener('load', function(){ this.media = 'all'; });
+
     const STRICT_DATE = '2026-06-13T00:00:00+02:00';
 
     function daysUntil(iso) {
