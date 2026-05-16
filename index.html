@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NL-UTG-KRT-REP01 · MeshCore Solar Repeater</title>
-  <meta name="description" content="MeshCore solar-powered repeater · SenseCAP Solar Node P1-Pro · 868 MHz · Nederland" />
+  <title>NL-UTG-KRT-REP01 &amp; REP02 · MeshCore Solar Repeaters</title>
+  <meta name="description" content="MeshCore solar-powered repeaters · SenseCAP Solar Node P1-Pro · 868 MHz · Nederland" />
   <meta name="theme-color" content="#0d1117" />
 
   <!-- favicon -->
@@ -364,10 +364,11 @@
 
     /* LIVE / Cornmeister cards */
     .live-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
+      display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
-    @media (max-width: 880px) { .live-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 880px) { .live-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 580px) { .live-grid { grid-template-columns: 1fr; } }
 
     .live-card {
       padding: 2rem;
@@ -1069,6 +1070,7 @@
     @media (max-width: 700px) {
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     }
+    .footer-col { min-width: 0; }
     .footer-col h5 {
       font-family: var(--mono); font-size: 0.6875rem;
       letter-spacing: 0.18em; text-transform: uppercase;
@@ -1078,6 +1080,7 @@
       display: block; color: var(--ink-dim);
       text-decoration: none; padding: 0.25rem 0;
       font-size: 0.875rem; transition: color 0.2s;
+      overflow-wrap: break-word;
     }
     .footer-col a:hover { color: var(--ink); }
     .footer-col p { color: var(--ink-mute); font-size: 0.875rem; }
@@ -1120,7 +1123,7 @@
     <div class="topbar-inner">
       <div class="brand">
         <span class="brand-mark"></span>
-        <span id="brand-name">NL-UTG-KRT-REP01</span>
+        <span id="brand-name">NL-UTG-KRT-REP01 &amp; REP02</span>
       </div>
       <nav class="top-nav">
         <a href="#identity">Status</a>
@@ -1155,12 +1158,12 @@
         <div class="hero-grid">
           <div>
             <h1>
-              <span class="l1" id="hero-name">NL-UTG-KRT-REP01</span>
-              <span class="l2">een solar MeshCore-repeater op een dak in Uitgeest</span>
+              <span class="l1" id="hero-name">NL-UTG-KRT-REP01 &amp; REP02</span>
+              <span class="l2">twee solar MeshCore-repeaters op daken in Uitgeest</span>
             </h1>
             <p class="lede">
-              MeshCore-repeater op zonne-energie. Geen abonnement, geen cloud, geen single point of failure —
-              alleen een paar honderd milliwatt en een dakzicht op Noord-Holland. Doet stilletjes z'n werk
+              Twee MeshCore-repeaters op zonne-energie. Geen abonnement, geen cloud, geen single point of failure —
+              alleen een paar honderd milliwatt en een dakzicht op Noord-Holland. Doen stilletjes hun werk
               voor elk MeshCore-pakket dat hier voorbijkomt.
             </p>
             <div class="hero-coords">
@@ -1172,8 +1175,8 @@
 
             <!-- Cornmeister CTA inline in hero -->
             <div class="hero-cta-row">
-              <a href="https://cornmeister.nl/#/nodes/89115054326394fc1a0bb981b96688c5411ae9e30885de5424536828a7e3632c" target="_blank" rel="noopener" class="cta primary">
-                Live data op Cornmeister <span class="arrow">↗</span>
+              <a href="#live" class="cta primary">
+                Live monitoring <span class="arrow">→</span>
               </a>
               <a href="#switch" class="cta secondary">
                 Doet mee met The Switch
@@ -1231,7 +1234,7 @@
                 <line x1="50" y1="115" x2="45"  y2="120" stroke="#3d4654"/>
                 <line x1="65" y1="115" x2="60"  y2="120" stroke="#3d4654"/>
                 <line x1="80" y1="115" x2="75"  y2="120" stroke="#3d4654"/>
-                <text x="40" y="138" text-anchor="middle" fill="#22c55e" font-family="JetBrains Mono" font-size="6" letter-spacing="1">NL-UTG-KRT-REP01</text>
+                <text x="40" y="138" text-anchor="middle" fill="#22c55e" font-family="JetBrains Mono" font-size="6" letter-spacing="1">REP01</text>
               </g>
 
               <!-- RIGHT: Heltec V4.3 observer (indoor, on a desk) -->
@@ -1674,6 +1677,27 @@
             </div>
           </a>
 
+          <!-- Repeater 2 card -->
+          <a href="https://cornmeister.nl/#/nodes/463ad6758a71610cbd4c05626fe04f7101df7a36c7b5280cc92a37ae0318fd57"
+             target="_blank" rel="noopener"
+             class="panel live-card live-card--repeater">
+            <span class="panel-corner tl"></span><span class="panel-corner tr"></span>
+            <span class="panel-corner bl"></span><span class="panel-corner br"></span>
+            <div class="live-card-meta">
+              <span class="role-badge">REPEATER</span>
+              <span class="live-card-arrow">↗</span>
+            </div>
+            <h3 class="live-card-name">NL-UTG-KRT-REP02</h3>
+            <p class="live-card-desc">SenseCAP P1-Pro, identieke hardware als REP01. Tweede solar repeater in Uitgeest.</p>
+            <div class="live-card-pubkey" title="public key">
+              <span class="micro" style="color:var(--ink-mute)">PUBKEY</span>
+              <code>463AD675…318FD57</code>
+            </div>
+            <div class="live-card-cta">
+              Open op Cornmeister →
+            </div>
+          </a>
+
           <!-- Observer card -->
           <a href="https://cornmeister.nl/#/observers/63F3CBC39A83C96C4CF25C3D6EFE15AA0FC22876E63CDED7ED9E2DF83515FA1C"
              target="_blank" rel="noopener"
@@ -1704,7 +1728,7 @@
               <div class="step-icon">📡</div>
               <div class="step-text">
                 <strong>Repeater</strong>
-                <span>NL-UTG-KRT-REP01 zendt &amp; relayt MeshCore-pakketten</span>
+                <span>REP01 &amp; REP02 zenden &amp; relayten MeshCore-pakketten</span>
               </div>
             </div>
             <div class="arrow-step">↣</div>
